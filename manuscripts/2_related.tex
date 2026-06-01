@@ -1,0 +1,14 @@
+\section{Related Work}
+
+The security of Large Language Model (LLM) deployment stacks has rapidly evolved from evaluating isolated components to understanding holistic system vulnerabilities. Recent literature highlights several approaches to vulnerability and attack path scoring.
+
+\subsection{Component-Level Vulnerability Scoring}
+Early approaches to LLM security relied heavily on adapting traditional scoring systems to AI components. The OWASP Top 10 for LLM Applications (2025 Edition) serves as the industry standard for identifying critical vulnerabilities such as Prompt Injection and Excessive Agency \cite{owasp2025}. In this baseline approach, risk is calculated by assessing the highest severity vulnerability of isolated components using the Common Vulnerability Scoring System (CVSS) independently. While useful for component patching, this method either overestimates risk by ignoring downstream defenses or underestimates it by failing to capture how multiple medium-risk vulnerabilities can compound into a critical compromise.
+
+\subsection{Threat Modeling and Qualitative Assessment}
+Qualitative frameworks such as MITRE ATLAS (Adversarial Threat Landscape for AI Systems) have been instrumental in mapping adversarial tactics, techniques, and procedures (TTPs) across the LLM pipeline \cite{mitre2025}. These frameworks provide an essential taxonomy from reconnaissance to exfiltration. However, they lack a quantitative, automated engine to prioritize which paths pose the greatest numerical risk or return on investment (ROI) for mitigation.
+
+\subsection{Attack Path Analysis in LLMs}
+More recently in 2026, the focus has shifted toward formal attack path analysis. A notable framework models LLM-enabled systems using Attack-Defense Trees (ADTrees) combined with CVSS exploitability scoring \cite{adtrees2026}. This approach bridges abstract AI security with traditional IT security by mapping multi-step paths. Similarly, a goal-driven risk assessment framework for LLM-powered healthcare systems utilizes a structured Likelihood $\times$ Impact calculation across attack trees to score agent hijacking and data extraction risks \cite{goaldriven2026}. 
+
+While these 2026 baselines successfully map attack chains, CAPS differentiates itself by introducing an explicit exponential decay factor ($\alpha^{k-1}$) to model the complexity of multi-hop exploits, and by dynamically calculating "Effective Exploitability" based on active defense mitigations at each layer.

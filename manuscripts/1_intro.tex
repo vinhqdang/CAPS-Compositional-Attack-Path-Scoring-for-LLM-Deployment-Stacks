@@ -1,0 +1,16 @@
+\section{Introduction}
+\label{sec:intro}
+
+The rapid integration of Large Language Models (LLMs) into enterprise ecosystems has introduced unprecedented security challenges. Unlike standalone applications, modern LLM deployments function as complex, highly interconnected stacks comprising prompt gateways, orchestrator agents, vector databases, and external tool executors. Consequently, the threat model has shifted from isolated vulnerabilities (e.g., a simple Cross-Site Scripting flaw) to sophisticated \textit{compositional attacks}, where malicious actors chain seemingly benign inputs to traverse trust boundaries and compromise high-value assets.
+
+Traditional vulnerability management frameworks, such as the Common Vulnerability Scoring System (CVSS), evaluate software components in isolation. When applied to LLM deployment stacks, these frameworks systematically fail to capture the operational realities of multi-stage attacks. By disregarding the friction associated with lateral movement and the compounding effects of downstream defenses, component-level scoring often yields structurally inconsistent risk assessments---leading to inflated risk scores and suboptimal allocation of security resources.
+
+To address these limitations, we present the \textbf{Compositional Attack Path Scoring (CAPS)} framework. CAPS redefines LLM risk assessment by transitioning from isolated vulnerability tracking to a holistic, graph-theoretic approach. The primary contributions of this paper are:
+\begin{enumerate}
+    \item \textbf{Topological Risk Modeling:} We introduce a directed graph formulation for LLM deployments, enabling automated mapping of attack paths from entry points to sensitive targets.
+    \item \textbf{Dynamic Mitigation Attenuation:} We propose the concept of \textit{Effective Exploitability}, a dynamic metric that mathematically scales down component vulnerabilities based on the presence and effectiveness of targeted security controls.
+    \item \textbf{Exponential Chaining Decay:} We mathematically formalize the "friction" of multi-hop exploits via an exponential decay factor ($\alpha$), preventing the risk overestimation endemic to traditional models.
+    \item \textbf{ROI-Driven Recommendations:} We demonstrate a simulation engine that identifies architectural choke points and ranks proposed mitigations by their systemic risk reduction.
+\end{enumerate}
+
+The remainder of this paper is organized as follows: Section \ref{sec:related} reviews related work. Section \ref{sec:method} details the CAPS methodology and mathematical formulations. Section \ref{sec:experiments} presents our empirical evaluation across standard LLM topologies. Finally, Sections \ref{sec:discussion} and \ref{sec:conclusion} discuss the implications and conclude the paper.
