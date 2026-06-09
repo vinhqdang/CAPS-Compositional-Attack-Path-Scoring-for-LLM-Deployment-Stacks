@@ -20,6 +20,7 @@ Ben-Tov, M., Geva, M., and Sharif, M. (2025).
 Chang, H., Jun, Y., and Lee, H. (2025a).
 \newblock {ChatInject}: Abusing chat templates for prompt injection in {LLM}
   agents.
+\newblock {\em arXiv preprint arXiv:2509.22830}.
 
 \bibitem[Chang et~al., 2025b]{chang2025oneshotdominance}
 Chang, Z., Li, M., Jia, X., Wang, J., Huang, Y., Jiang, Z., Liu, Y., and Wang,
@@ -42,6 +43,7 @@ Chao, P., Debenedetti, E., Robey, A., Andriushchenko, M., Croce, F., Sehwag,
 Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G.~J., and Wong, E.
   (2023).
 \newblock Jailbreaking black box large language models in twenty queries.
+\newblock {\em arXiv preprint arXiv:2310.08419}.
 
 \bibitem[Chau et~al., 2011]{chau2011polonium}
 Chau, D.~H., Nachenberg, C., Wilhelm, J., Wright, A., and Faloutsos, C. (2011).
@@ -73,6 +75,7 @@ Dang, Q.-V., Dinh, M.~N., and Le, A.~D. (2025).
 Debenedetti, E., Shumailov, I., Fan, T., Hayes, J., Carlini, N., Fabian, D.,
   Kern, C., Shi, C., Terzis, A., and Tram{\`e}r, F. (2025).
 \newblock Defeating prompt injections by design.
+\newblock {\em arXiv preprint arXiv:2503.18813}.
 
 \bibitem[Debenedetti et~al., 2024]{debenedetti2024agentdojo}
 Debenedetti, E., Zhang, J., Balunovi{\'c}, M., Beurer-Kellner, L., Fischer, M.,
@@ -86,6 +89,7 @@ Debenedetti, E., Zhang, J., Balunovi{\'c}, M., Beurer-Kellner, L., Fischer, M.,
 Dong, S., Xu, S., He, P., Li, Y., Tang, J., Liu, T., Liu, H., and Xiang, Z.
   (2025).
 \newblock Memory injection attacks on {LLM} agents via query-only interaction.
+\newblock {\em arXiv preprint arXiv:2503.03704}.
 
 \bibitem[Greshake et~al., 2023]{greshake2023indirect}
 Greshake, K., Abdelnabi, S., Mishra, S., Endres, C., Holz, T., and Fritz, M.
@@ -100,6 +104,7 @@ Ha, H., Zhan, Q., Kim, J., Bralios, D., Sanniboina, S., Peng, N., Chang, K.-W.,
   Kang, D., and Ji, H. (2025).
 \newblock {MM-PoisonRAG}: Disrupting multimodal {RAG} with local and global
   poisoning attacks.
+\newblock {\em arXiv preprint arXiv:2502.17832}.
 
 \bibitem[Hagendorff et~al., 2026]{hagendorff2026lrms}
 Hagendorff, T., Derner, E., and Oliver, N. (2026).
@@ -127,6 +132,7 @@ Johnson, M. and Lee, S. (2026).
 Johnson, S., Pham, V., and Le, T. (2025).
 \newblock Manipulating {LLM} web agents with indirect prompt injection attack
   via {HTML} accessibility tree.
+\newblock {\em arXiv preprint arXiv:2507.14799}.
 
 \bibitem[Kuo et~al., 2025]{kuo2025hcot}
 Kuo, M., Zhang, J., Ding, A., Wang, Q., DiValentin, L., Bao, Y., Wei, W., Li,
@@ -134,11 +140,13 @@ Kuo, M., Zhang, J., Ding, A., Wang, Q., DiValentin, L., Bao, Y., Wei, W., Li,
 \newblock {H-CoT}: Hijacking the chain-of-thought safety reasoning mechanism to
   jailbreak large reasoning models, including {OpenAI} o1/o3, {DeepSeek-R1},
   and {Gemini 2.0 Flash Thinking}.
+\newblock {\em arXiv preprint arXiv:2502.12893}.
 
 \bibitem[Li et~al., 2025]{li2025securitylingua}
 Li, Y., Ahn, S., Jiang, H., Abdi, A.~H., Yang, Y., and Qiu, L. (2025).
 \newblock {SecurityLingua}: Efficient defense of {LLM} jailbreak attacks via
   security-aware prompt compression.
+\newblock {\em arXiv preprint arXiv:2506.12707}.
 
 \bibitem[Liu et~al., 2025]{liu2025autodan}
 Liu, X., Li, P., Suh, E., Vorobeychik, Y., Mao, Z., Jha, S., McDaniel, P., Sun,
@@ -160,6 +168,7 @@ Maloyan, N. and Namiot, D. (2026).
 \newblock Breaking the protocol: Security analysis of the model context
   protocol specification and prompt injection vulnerabilities in
   tool-integrated {LLM} agents.
+\newblock {\em arXiv preprint arXiv:2601.17549}.
 
 \bibitem[Manadhata and Wing, 2011]{manadhata2011attack}
 Manadhata, P.~K. and Wing, J.~M. (2011).
@@ -186,6 +195,7 @@ Nasr, M., Carlini, N., Sitawarin, C., Schulhoff, S.~V., Hayes, J., et~al.
   (2025).
 \newblock The attacker moves second: Stronger adaptive attacks bypass defenses
   against {LLM} jailbreaks and prompt injections.
+\newblock {\em arXiv preprint arXiv:2510.09023}.
 
 \bibitem[{National Security Agency (NSA), Artificial Intelligence Security
   Center}, 2026]{nsa2026mcp}
@@ -213,6 +223,7 @@ Sharma, M., Tong, M., Mu, J., Wei, J., Benton, J., Bowman, S.~R., et~al.
   (2025).
 \newblock Constitutional classifiers: Defending against universal jailbreaks
   across thousands of hours of red teaming.
+\newblock {\em arXiv preprint arXiv:2501.18837}.
 
 \bibitem[Sheyner et~al., 2002]{sheyner2002attackgraphs}
 Sheyner, O., Haines, J., Jha, S., Lippmann, R., and Wing, J.~M. (2002).
@@ -238,6 +249,7 @@ Wang, Z., Gao, Y., Wang, Y., Liu, S., Sun, H., Cheng, H., Shi, G., Du, H., and
   Li, X. (2025).
 \newblock {MCPTox}: A benchmark for tool poisoning attack on real-world {MCP}
   servers.
+\newblock {\em arXiv preprint arXiv:2508.14925}.
 
 \bibitem[Zhan et~al., 2024]{zhan2024injecagent}
 Zhan, Q., Liang, Z., Ying, Z., and Kang, D. (2024).
@@ -283,6 +295,7 @@ Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J.~Z., and Fredrikson, M.
   (2023).
 \newblock Universal and transferable adversarial attacks on aligned language
   models.
+\newblock {\em arXiv preprint arXiv:2307.15043}.
 
 \bibitem[Zou et~al., 2025]{zou2025poisonedrag}
 Zou, W., Geng, R., Wang, B., and Jia, J. (2025).

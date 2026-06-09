@@ -3,58 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: BVP_Sample.aux
 The style file: apalike.bst
 Database file #1: ref.bib
-Warning--empty journal in chang2025chatinject
-Warning--empty journal in chao2023pair
-Warning--empty journal in debenedetti2025camel
-Warning--empty journal in dong2025minja
-Warning--empty journal in ha2025mmpoisonrag
-Warning--empty journal in johnson2025htmlipi
-Warning--empty journal in kuo2025hcot
-Warning--empty journal in li2025securitylingua
-Warning--empty journal in maloyan2026protocol
-Warning--empty journal in nasr2025adaptive
-Warning--empty journal in sharma2025constitutional
-Warning--empty journal in wang2025mcptox
-Warning--empty journal in zou2023gcg
 You've used 46 entries,
             1935 wiz_defined-function locations,
-            660 strings with 14293 characters,
-and the built_in function-call counts, 21718 in all, are:
-= -- 1962
+            673 strings with 14696 characters,
+and the built_in function-call counts, 21796 in all, are:
+= -- 1988
 > -- 1406
 < -- 19
 + -- 516
 - -- 508
-* -- 1869
-:= -- 3824
-add.period$ -- 126
+* -- 1856
+:= -- 3850
+add.period$ -- 139
 call.type$ -- 46
 change.case$ -- 480
 chr.to.int$ -- 44
-cite$ -- 59
+cite$ -- 46
 duplicate$ -- 789
 empty$ -- 1244
 format.name$ -- 567
-if$ -- 4172
+if$ -- 4198
 int.to.chr$ -- 3
 int.to.str$ -- 0
 missing$ -- 42
-newline$ -- 221
+newline$ -- 234
 num.names$ -- 138
-pop$ -- 573
+pop$ -- 547
 preamble$ -- 1
 purify$ -- 480
 quote$ -- 0
 skip$ -- 571
 stack$ -- 0
 substring$ -- 963
-swap$ -- 132
+swap$ -- 145
 text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 276
-warning$ -- 13
+warning$ -- 0
 while$ -- 122
 width$ -- 0
-write$ -- 542
-(There were 13 warnings)
+write$ -- 568
