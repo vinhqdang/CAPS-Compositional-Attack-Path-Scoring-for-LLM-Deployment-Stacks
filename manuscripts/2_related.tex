@@ -41,17 +41,6 @@ companion OWASP MCP Top 10\footnote{\url{https://owasp.org/www-project-mcp-top-1
 taxonomies that span prompt injection, RAG poisoning, excessive agency, and
 MCP-specific tool poisoning risks across modern deployment stacks.
 
-Concurrently, Dang~et~al.~\cite{dang2025lasm} propose LASM, a unified
-measurement framework that introduces five interlocking metrics (LAS, SASR,
-TRC, EAS, ADT) jointly quantifying structural vulnerability, temporal defense
-degradation, and game-theoretic economic deterrence. LASM introduces an
-Integrational Composability Factor ($\alpha$) as a uniform scalar multiplier
-for multi-agent deployments. However, $\alpha$ does not identify
-\emph{which} attack vectors compose with \emph{which} others, nor does it
-score the specific cross-layer paths responsible for elevated risk. CAPS
-addresses this gap by replacing $\alpha$ with a full per-edge conditional
-probability matrix and a path-propagation algorithm that identifies and scores
-end-to-end attack chains.
 
 Despite this body of work, all existing frameworks evaluate attacks
 \emph{in isolation} on a single deployment layer. No framework models how

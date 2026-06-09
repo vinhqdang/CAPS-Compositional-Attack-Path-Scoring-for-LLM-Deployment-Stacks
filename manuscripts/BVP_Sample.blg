@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: BVP_Sample.aux
 The style file: apalike.bst
 Database file #1: ref.bib
-You've used 46 entries,
+You've used 45 entries,
             1935 wiz_defined-function locations,
-            673 strings with 14696 characters,
-and the built_in function-call counts, 21796 in all, are:
-= -- 1988
-> -- 1406
+            669 strings with 14454 characters,
+and the built_in function-call counts, 21489 in all, are:
+= -- 1958
+> -- 1388
 < -- 19
-+ -- 516
-- -- 508
-* -- 1856
-:= -- 3850
-add.period$ -- 139
-call.type$ -- 46
-change.case$ -- 480
-chr.to.int$ -- 44
-cite$ -- 46
-duplicate$ -- 789
-empty$ -- 1244
-format.name$ -- 567
-if$ -- 4198
++ -- 510
+- -- 502
+* -- 1831
+:= -- 3787
+add.period$ -- 136
+call.type$ -- 45
+change.case$ -- 472
+chr.to.int$ -- 43
+cite$ -- 45
+duplicate$ -- 780
+empty$ -- 1230
+format.name$ -- 560
+if$ -- 4144
 int.to.chr$ -- 3
 int.to.str$ -- 0
 missing$ -- 42
-newline$ -- 234
-num.names$ -- 138
-pop$ -- 547
+newline$ -- 229
+num.names$ -- 135
+pop$ -- 542
 preamble$ -- 1
-purify$ -- 480
+purify$ -- 472
 quote$ -- 0
-skip$ -- 571
+skip$ -- 563
 stack$ -- 0
-substring$ -- 963
+substring$ -- 951
 swap$ -- 145
 text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 276
+type$ -- 270
 warning$ -- 0
-while$ -- 122
+while$ -- 120
 width$ -- 0
-write$ -- 568
+write$ -- 556

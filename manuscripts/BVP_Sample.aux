@@ -12,7 +12,6 @@
 \citation{chao2024jailbreakbench}
 \citation{souly2024strongreject}
 \citation{zhang2025asb}
-\citation{dang2025lasm}
 \citation{zou2023gcg}
 \citation{chao2023pair}
 \citation{liu2025autodan}
@@ -29,12 +28,13 @@
 \citation{chang2025chatinject}
 \citation{johnson2025htmlipi}
 \citation{he2025aitm}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Jailbreak Attacks Against LLMs and Reasoning Models}{2}{subsection.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Prompt Injection and Agentic Attacks}{2}{subsection.2.3}\protected@file@percent }
 \citation{invariantlabs2025mcp}
 \citation{wang2025mcptox}
 \citation{maloyan2026protocol}
 \citation{nsa2026mcp}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Jailbreak Attacks Against LLMs and Reasoning Models}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Prompt Injection and Agentic Attacks}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}MCP and Tool-Use Security}{2}{subsection.2.4}\protected@file@percent }
 \citation{zou2025poisonedrag}
 \citation{zhang2025corruptrag}
 \citation{chang2025oneshotdominance}
@@ -49,13 +49,12 @@
 \citation{nasr2025adaptive}
 \citation{sheyner2002attackgraphs}
 \citation{ammann2002scalable}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}MCP and Tool-Use Security}{3}{subsection.2.4}\protected@file@percent }
+\citation{chau2011polonium}
+\citation{zhou2019devign}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}RAG Poisoning and Knowledge Base Attacks}{3}{subsection.2.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Agent Memory Poisoning}{3}{subsection.2.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Defenses and Their Limitations}{3}{subsection.2.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Graph-Based Security Modeling}{3}{subsection.2.8}\protected@file@percent }
-\citation{chau2011polonium}
-\citation{zhou2019devign}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Summary of mathematical notation used in the CAPS framework.}}{4}{table.1}\protected@file@percent }
 \newlabel{tab:notation}{{1}{4}{Summary of mathematical notation used in the CAPS framework}{table.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Methodology}{4}{section.3}\protected@file@percent }
@@ -75,31 +74,32 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Evaluation Topologies}{6}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Topology 1: RAG-based Customer Chatbot}{6}{subsubsection.4.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Topology 2: Autonomous Coding Agent}{6}{subsubsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Topology 3: Enterprise Model Router}{6}{subsubsection.4.1.3}\protected@file@percent }
 \citation{vanhamme2026matra}
 \citation{cyrille2026strideai}
 \citation{nagaraja2026llmbasedsystemsbreaksystemlevel}
 \citation{goaldriven2026}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Topology 1: RAG-based Customer Chatbot Architecture. The directed graph illustrates the flow from external web clients through the orchestrator to internal vector and SQL databases.}}{7}{figure.2}\protected@file@percent }
 \newlabel{fig:rag_topology}{{2}{7}{Topology 1: RAG-based Customer Chatbot Architecture. The directed graph illustrates the flow from external web clients through the orchestrator to internal vector and SQL databases}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Topology 3: Enterprise Model Router}{7}{subsubsection.4.1.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Baseline Scoring Methodologies}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{7}{subsection.4.3}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison of Critical Attack Path Risk Scores across frameworks. Lower CAPS scores represent a more realistic appraisal of compounding exploit friction over multi-hop paths compared to independent component baselines.}}{8}{table.2}\protected@file@percent }
 \newlabel{tab:results}{{2}{8}{Comparison of Critical Attack Path Risk Scores across frameworks. Lower CAPS scores represent a more realistic appraisal of compounding exploit friction over multi-hop paths compared to independent component baselines}{table.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{8}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Visual comparison of Critical Attack Path Risk Scores across architectures. CAPS corrects the severe overestimation seen in Baseline 1 and Baseline 3 by incorporating dynamic mitigation attenuation and chaining decay.}}{8}{figure.3}\protected@file@percent }
+\newlabel{fig:baselines}{{3}{8}{Visual comparison of Critical Attack Path Risk Scores across architectures. CAPS corrects the severe overestimation seen in Baseline 1 and Baseline 3 by incorporating dynamic mitigation attenuation and chaining decay}{figure.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Results and Discussion}{8}{subsection.4.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Path Resolution Accuracy}{8}{subsubsection.4.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Addressing Systemic Risk Overestimation}{8}{subsubsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}The Efficacy of Chaining Decay}{8}{subsubsection.4.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.4}Mitigation ROI Prioritization}{8}{subsubsection.4.4.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Visual comparison of Critical Attack Path Risk Scores across architectures. CAPS corrects the severe overestimation seen in Baseline 1 and Baseline 3 by incorporating dynamic mitigation attenuation and chaining decay.}}{9}{figure.3}\protected@file@percent }
-\newlabel{fig:baselines}{{3}{9}{Visual comparison of Critical Attack Path Risk Scores across architectures. CAPS corrects the severe overestimation seen in Baseline 1 and Baseline 3 by incorporating dynamic mitigation attenuation and chaining decay}{figure.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Mitigation ROI Prioritization for the RAG Chatbot Topology. CAPS correctly identifies the Orchestrator guardrail as the highest ROI investment, despite the Customer DB carrying the ultimate payload vulnerability.}}{9}{table.3}\protected@file@percent }
 \newlabel{tab:mitigation_roi}{{3}{9}{Mitigation ROI Prioritization for the RAG Chatbot Topology. CAPS correctly identifies the Orchestrator guardrail as the highest ROI investment, despite the Customer DB carrying the ultimate payload vulnerability}{table.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}The Efficacy of Chaining Decay}{9}{subsubsection.4.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.4}Mitigation ROI Prioritization}{9}{subsubsection.4.4.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{9}{section.5}\protected@file@percent }
 \newlabel{sec:discussion}{{5}{9}{}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Theoretical Implications of Multi-Hop Friction}{9}{subsection.5.1}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The impact of the chaining decay factor ($\alpha $) on cumulative path exploitability over multiple hops. As path length increases, lower $\alpha $ values correctly penalize the theoretical probability to reflect real-world exploit friction.}}{9}{figure.4}\protected@file@percent }
 \newlabel{fig:decay}{{4}{9}{The impact of the chaining decay factor ($\alpha $) on cumulative path exploitability over multiple hops. As path length increases, lower $\alpha $ values correctly penalize the theoretical probability to reflect real-world exploit friction}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Operational Integration via CI/CD pipelines}{9}{subsection.5.2}\protected@file@percent }
 \bibstyle{apalike}
 \bibdata{ref}
 \bibcite{ammann2002scalable}{{1}{2002}{{Ammann et~al.}}{{}}}
@@ -112,45 +112,43 @@
 \bibcite{chau2011polonium}{{8}{2011}{{Chau et~al.}}{{}}}
 \bibcite{chen2025struq}{{9}{2025}{{Chen et~al.}}{{}}}
 \bibcite{cyrille2026strideai}{{10}{2026}{{Cyrille and Schwarz}}{{}}}
-\bibcite{dang2025lasm}{{11}{2025}{{Dang et~al.}}{{}}}
-\bibcite{debenedetti2025camel}{{12}{2025}{{Debenedetti et~al.}}{{}}}
-\bibcite{debenedetti2024agentdojo}{{13}{2024}{{Debenedetti et~al.}}{{}}}
-\bibcite{dong2025minja}{{14}{2025}{{Dong et~al.}}{{}}}
-\bibcite{greshake2023indirect}{{15}{2023}{{Greshake et~al.}}{{}}}
-\bibcite{ha2025mmpoisonrag}{{16}{2025}{{Ha et~al.}}{{}}}
-\bibcite{hagendorff2026lrms}{{17}{2026}{{Hagendorff et~al.}}{{}}}
-\bibcite{he2025aitm}{{18}{2025}{{He et~al.}}{{}}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Operational Integration via CI/CD pipelines}{10}{subsection.5.2}\protected@file@percent }
+\bibcite{debenedetti2025camel}{{11}{2025}{{Debenedetti et~al.}}{{}}}
+\bibcite{debenedetti2024agentdojo}{{12}{2024}{{Debenedetti et~al.}}{{}}}
+\bibcite{dong2025minja}{{13}{2025}{{Dong et~al.}}{{}}}
+\bibcite{greshake2023indirect}{{14}{2023}{{Greshake et~al.}}{{}}}
+\bibcite{ha2025mmpoisonrag}{{15}{2025}{{Ha et~al.}}{{}}}
+\bibcite{hagendorff2026lrms}{{16}{2026}{{Hagendorff et~al.}}{{}}}
+\bibcite{he2025aitm}{{17}{2025}{{He et~al.}}{{}}}
+\bibcite{invariantlabs2025mcp}{{18}{2025}{{Invariant Labs}}{{}}}
+\bibcite{goaldriven2026}{{19}{2026}{{Johnson and Lee}}{{}}}
+\bibcite{johnson2025htmlipi}{{20}{2025}{{Johnson et~al.}}{{}}}
+\bibcite{kuo2025hcot}{{21}{2025}{{Kuo et~al.}}{{}}}
+\bibcite{li2025securitylingua}{{22}{2025}{{Li et~al.}}{{}}}
+\bibcite{liu2025autodan}{{23}{2025}{{Liu et~al.}}{{}}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Limitations and Future Work}{10}{subsection.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{10}{section.6}\protected@file@percent }
 \newlabel{sec:conclusion}{{6}{10}{}{section.6}{}}
-\bibcite{invariantlabs2025mcp}{{19}{2025}{{Invariant Labs}}{{}}}
-\bibcite{goaldriven2026}{{20}{2026}{{Johnson and Lee}}{{}}}
-\bibcite{johnson2025htmlipi}{{21}{2025}{{Johnson et~al.}}{{}}}
-\bibcite{kuo2025hcot}{{22}{2025}{{Kuo et~al.}}{{}}}
-\bibcite{li2025securitylingua}{{23}{2025}{{Li et~al.}}{{}}}
-\bibcite{liu2025autodan}{{24}{2025}{{Liu et~al.}}{{}}}
-\bibcite{liu2025autodanreasoning}{{25}{2025}{{Liu and Xiao}}{{}}}
-\bibcite{maloyan2026protocol}{{26}{2026}{{Maloyan and Namiot}}{{}}}
-\bibcite{manadhata2011attack}{{27}{2011}{{Manadhata and Wing}}{{}}}
-\bibcite{mazeika2024harmbench}{{28}{2024}{{Mazeika et~al.}}{{}}}
-\bibcite{nagaraja2026llmbasedsystemsbreaksystemlevel}{{29}{2026}{{Nagaraja and Bahsi}}{{}}}
-\bibcite{nasr2025adaptive}{{30}{2025}{{Nasr et~al.}}{{}}}
-\bibcite{nsa2026mcp}{{31}{2026}{{National Security Agency (NSA), Artificial Intelligence Security Center}}{{}}}
-\bibcite{nguyen2025seal}{{32}{2025}{{Nguyen et~al.}}{{}}}
-\bibcite{russinovich2025crescendo}{{33}{2025}{{Russinovich et~al.}}{{}}}
-\bibcite{sharma2025constitutional}{{34}{2025}{{Sharma et~al.}}{{}}}
-\bibcite{sheyner2002attackgraphs}{{35}{2002}{{Sheyner et~al.}}{{}}}
-\bibcite{souly2024strongreject}{{36}{2024}{{Souly et~al.}}{{}}}
-\bibcite{vanhamme2026matra}{{37}{2026}{{Van~hamme et~al.}}{{}}}
-\bibcite{wang2025mcptox}{{38}{2025}{{Wang et~al.}}{{}}}
-\bibcite{zhan2024injecagent}{{39}{2024}{{Zhan et~al.}}{{}}}
-\bibcite{zhang2025corruptrag}{{40}{2026}{{Zhang et~al.}}{{}}}
-\bibcite{zhang2025ragforensics}{{41}{2025a}{{Zhang et~al.}}{{}}}
-\bibcite{zhang2025asb}{{42}{2025b}{{Zhang et~al.}}{{}}}
-\bibcite{zhou2019devign}{{43}{2019}{{Zhou et~al.}}{{}}}
-\bibcite{zou2024circuitbreakers}{{44}{2024}{{Zou et~al.}}{{}}}
-\bibcite{zou2023gcg}{{45}{2023}{{Zou et~al.}}{{}}}
-\bibcite{zou2025poisonedrag}{{46}{2025}{{Zou et~al.}}{{}}}
+\bibcite{liu2025autodanreasoning}{{24}{2025}{{Liu and Xiao}}{{}}}
+\bibcite{maloyan2026protocol}{{25}{2026}{{Maloyan and Namiot}}{{}}}
+\bibcite{manadhata2011attack}{{26}{2011}{{Manadhata and Wing}}{{}}}
+\bibcite{mazeika2024harmbench}{{27}{2024}{{Mazeika et~al.}}{{}}}
+\bibcite{nagaraja2026llmbasedsystemsbreaksystemlevel}{{28}{2026}{{Nagaraja and Bahsi}}{{}}}
+\bibcite{nasr2025adaptive}{{29}{2025}{{Nasr et~al.}}{{}}}
+\bibcite{nsa2026mcp}{{30}{2026}{{National Security Agency (NSA), Artificial Intelligence Security Center}}{{}}}
+\bibcite{nguyen2025seal}{{31}{2025}{{Nguyen et~al.}}{{}}}
+\bibcite{russinovich2025crescendo}{{32}{2025}{{Russinovich et~al.}}{{}}}
+\bibcite{sharma2025constitutional}{{33}{2025}{{Sharma et~al.}}{{}}}
+\bibcite{sheyner2002attackgraphs}{{34}{2002}{{Sheyner et~al.}}{{}}}
+\bibcite{souly2024strongreject}{{35}{2024}{{Souly et~al.}}{{}}}
+\bibcite{vanhamme2026matra}{{36}{2026}{{Van~hamme et~al.}}{{}}}
+\bibcite{wang2025mcptox}{{37}{2025}{{Wang et~al.}}{{}}}
+\bibcite{zhan2024injecagent}{{38}{2024}{{Zhan et~al.}}{{}}}
+\bibcite{zhang2025corruptrag}{{39}{2026}{{Zhang et~al.}}{{}}}
+\bibcite{zhang2025ragforensics}{{40}{2025a}{{Zhang et~al.}}{{}}}
+\bibcite{zhang2025asb}{{41}{2025b}{{Zhang et~al.}}{{}}}
+\bibcite{zhou2019devign}{{42}{2019}{{Zhou et~al.}}{{}}}
+\bibcite{zou2024circuitbreakers}{{43}{2024}{{Zou et~al.}}{{}}}
+\bibcite{zou2023gcg}{{44}{2023}{{Zou et~al.}}{{}}}
+\bibcite{zou2025poisonedrag}{{45}{2025}{{Zou et~al.}}{{}}}
 \newlabel{lastpage}{{6}{11}{}{section.6}{}}
 \gdef \@abspage@last{11}
