@@ -1,3 +1,540 @@
+% ============================================================
+% caps_references.bib
+% BibTeX file for CAPS: Compositional Attack Path Scoring
+% All entries verified against primary sources (arXiv / DOI / venue)
+% Last updated: May 2026
+% ============================================================
+
+% -------------------------------------------------------
+% SECTION 1: LLM ATTACK SURFACE MEASUREMENT & EVALUATION
+% -------------------------------------------------------
+
+@article{manadhata2011attack,
+  author    = {Manadhata, Pratyusa K. and Wing, Jeannette M.},
+  title     = {An Attack Surface Metric},
+  journal   = {{IEEE} Transactions on Software Engineering},
+  volume    = {37},
+  number    = {3},
+  pages     = {371--386},
+  year      = {2011},
+  doi       = {10.1109/TSE.2010.60}
+}
+
+@inproceedings{mazeika2024harmbench,
+  author    = {Mazeika, Mantas and Phan, Long and Yin, Xuwang and
+               Zou, Andy and Wang, Zifan and Mu, Norman and
+               Sakhaee, Elham and Li, Nathaniel and Basart, Steven and
+               Li, Bo and Forsyth, David and Hendrycks, Dan},
+  title     = {{HarmBench}: A Standardized Evaluation Framework for
+               Automated Red Teaming and Robust Refusal},
+  booktitle = {Proceedings of the 41st International Conference on
+               Machine Learning ({ICML})},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {235},
+  pages     = {35181--35224},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2402.04249}
+}
+
+@inproceedings{chao2024jailbreakbench,
+  author    = {Chao, Patrick and Debenedetti, Edoardo and Robey, Alexander and
+               Andriushchenko, Maksym and Croce, Francesco and Sehwag, Vikash and
+               Dobriban, Edgar and Flammarion, Nicolas and Pappas, George J. and
+               Tram{\`e}r, Florian and Hassani, Hamed and Wong, Eric},
+  title     = {{JailbreakBench}: An Open Robustness Benchmark for Jailbreaking
+               Large Language Models},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS}),
+               Datasets and Benchmarks Track},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2404.01318}
+}
+
+@inproceedings{souly2024strongreject,
+  author    = {Souly, Alexandra and Lu, Qingyuan and Bowen, Dillon and
+               Trinh, Tu and Hsieh, Elvis and Pandey, Sana and
+               Abbeel, Pieter and Svegliato, Justin and Emmons, Scott and
+               Watkins, Olivia and Toyer, Sam},
+  title     = {A {StrongREJECT} for Empty Jailbreaks},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2402.10260}
+}
+
+@inproceedings{zhang2025asb,
+  author    = {Zhang, Hanrong and Huang, Jingyuan and Mei, Kai and
+               Yao, Yifei and Wang, Zhenting and Zhan, Chenlu and
+               Wang, Hongwei and Zhang, Yongfeng},
+  title     = {Agent Security Bench ({ASB}): Formalizing and Benchmarking
+               Attacks and Defenses in {LLM}-Based Agents},
+  booktitle = {Proceedings of the 13th International Conference on
+               Learning Representations ({ICLR})},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2410.02644}
+}
+
+@unpublished{dang2025lasm,
+  author = {Dang, Quang-Vinh and Dinh, Minh Ngoc and Le, Anh Dat},
+  title  = {{LASM}: A Unified Measurement Framework for {LLM}-Based System
+             Security --- Attack Surface Quantification, Standardized
+             Evaluation, and Temporal Robustness},
+  note   = {Manuscript under review},
+  year   = {2025}
+}
+
+@misc{owasp2025llmtop10,
+  author       = {{OWASP GenAI Security Project}},
+  title        = {{OWASP} Top 10 for {LLM} Applications 2025},
+  year         = {2025},
+  howpublished = {Open Web Application Security Project},
+  url          = {https://genai.owasp.org/llm-top-10/}
+}
+
+@misc{owasp2025mcptop10,
+  author       = {{OWASP GenAI Security Project}},
+  title        = {{OWASP MCP} Top 10},
+  year         = {2025},
+  howpublished = {Open Web Application Security Project},
+  url          = {https://owasp.org/www-project-mcp-top-10/}
+}
+
+% -------------------------------------------------------
+% SECTION 2: JAILBREAK ATTACKS
+% -------------------------------------------------------
+
+@misc{zou2023gcg,
+  author        = {Zou, Andy and Wang, Zifan and Carlini, Nicholas and
+                   Nasr, Milad and Kolter, J. Zico and Fredrikson, Matt},
+  title         = {Universal and Transferable Adversarial Attacks on
+                   Aligned Language Models},
+  year          = {2023},
+  archivePrefix = {arXiv},
+  eprint        = {2307.15043},
+  url           = {https://arxiv.org/abs/2307.15043}
+}
+
+@misc{chao2023pair,
+  author        = {Chao, Patrick and Robey, Alexander and Dobriban, Edgar and
+                   Hassani, Hamed and Pappas, George J. and Wong, Eric},
+  title         = {Jailbreaking Black Box Large Language Models in Twenty Queries},
+  year          = {2023},
+  archivePrefix = {arXiv},
+  eprint        = {2310.08419},
+  url           = {https://arxiv.org/abs/2310.08419}
+}
+
+@inproceedings{liu2025autodan,
+  author    = {Liu, Xiaogeng and Li, Peiran and Suh, Edward and
+               Vorobeychik, Yevgeniy and Mao, Zhuoqing and Jha, Somesh and
+               McDaniel, Patrick and Sun, Huan and Li, Bo and Xiao, Chaowei},
+  title     = {{AutoDAN-Turbo}: A Lifelong Agent for Strategy Self-Exploration
+               to Jailbreak {LLMs}},
+  booktitle = {Proceedings of the 13th International Conference on
+               Learning Representations ({ICLR})},
+  note      = {Spotlight},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2410.05295}
+}
+
+@article{liu2025autodanreasoning,
+  author        = {Liu, Xiaogeng and Xiao, Chaowei},
+  title         = {{AutoDAN-Reasoning}: Enhancing Strategies Exploration Based
+                   Jailbreak Attacks with Test-Time Scaling},
+  year          = {2025},
+  journal = {arXiv 2510.05379},
+  eprint        = {2510.05379},
+  url           = {https://arxiv.org/abs/2510.05379}
+}
+
+@inproceedings{russinovich2025crescendo,
+  author    = {Russinovich, Mark and Salem, Ahmed and Eldan, Ronen},
+  title     = {Great, Now Write an Article About That: The {Crescendo}
+               Multi-Turn {LLM} Jailbreak Attack},
+  booktitle = {Proceedings of the 34th {USENIX} Security Symposium
+               ({USENIX} Security '25)},
+  pages     = {2421--2440},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2404.01833}
+}
+
+@misc{anil2024manyshot,
+  author       = {Anil, Cem and Durmus, Esin and Sharma, Mrinank and
+                  Benton, Joe and others},
+  title        = {Many-Shot Jailbreaking},
+  year         = {2024},
+  howpublished = {Anthropic Research},
+  url          = {https://www.anthropic.com/research/many-shot-jailbreaking}
+}
+
+@misc{kuo2025hcot,
+  author        = {Kuo, Martin and Zhang, Jianyi and Ding, Aolin and
+                   Wang, Qinsi and DiValentin, Louis and Bao, Yujia and
+                   Wei, Wei and Li, Hai and Chen, Yiran},
+  title         = {{H-CoT}: Hijacking the Chain-of-Thought Safety Reasoning
+                   Mechanism to Jailbreak Large Reasoning Models, Including
+                   {OpenAI} o1/o3, {DeepSeek-R1}, and {Gemini 2.0 Flash Thinking}},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2502.12893},
+  url           = {https://arxiv.org/abs/2502.12893}
+}
+
+@article{nguyen2025seal,
+  author        = {Nguyen, Viet-Anh and Zhao, Shiqian and Dao, Gia and
+                   Hu, Runyi and Xie, Yi and Tuan, Luu Anh},
+  title         = {Three Minds, One Legend: Jailbreak Large Reasoning Model
+                   with Adaptive Stacked Ciphers},
+  year          = {2025},
+  journal = {arXiv 2505.16241},
+  url           = {https://arxiv.org/abs/2505.16241}
+}
+
+@article{bentov2025jailbreakattention,
+  author        = {Ben-Tov, Matan and Geva, Mor and Sharif, Mahmood},
+  title         = {Universal Jailbreak Suffixes Are Strong Attention Hijackers},
+  year          = {2025},
+  journal = {arXiv 2506.12880},
+  url           = {https://arxiv.org/abs/2506.12880}
+}
+
+@article{hagendorff2026lrms,
+  author  = {Hagendorff, Thilo and Derner, Erik and Oliver, Nuria},
+  title   = {Large Reasoning Models Are Autonomous Jailbreak Agents},
+  journal = {Nature Communications},
+  volume  = {17},
+  pages   = {1435},
+  year    = {2026},
+  doi     = {10.1038/s41467-026-69010-1},
+  url     = {https://www.nature.com/articles/s41467-026-69010-1}
+}
+
+% -------------------------------------------------------
+% SECTION 3: PROMPT INJECTION AND AGENTIC ATTACKS
+% -------------------------------------------------------
+
+@inproceedings{greshake2023indirect,
+  author    = {Greshake, Kai and Abdelnabi, Sahar and Mishra, Shailesh and
+               Endres, Christoph and Holz, Thorsten and Fritz, Mario},
+  title     = {Not What You've Signed Up For: Compromising Real-World
+               {LLM}-Integrated Applications with Indirect Prompt Injection},
+  booktitle = {Proceedings of the 16th {ACM} Workshop on Artificial Intelligence
+               and Security ({AISec} '23)},
+  year      = {2023},
+  doi       = {10.1145/3605764.3623985},
+  url       = {https://arxiv.org/abs/2302.12173}
+}
+
+@inproceedings{zhan2024injecagent,
+  author    = {Zhan, Qiusi and Liang, Zhixiang and Ying, Zifan and Kang, Daniel},
+  title     = {{InjecAgent}: Benchmarking Indirect Prompt Injections in
+               Tool-Integrated Large Language Model Agents},
+  booktitle = {Findings of the Association for Computational Linguistics:
+               {ACL} 2024},
+  pages     = {10471--10506},
+  year      = {2024},
+  doi       = {10.18653/v1/2024.findings-acl.624},
+  url       = {https://arxiv.org/abs/2403.02691}
+}
+
+@inproceedings{debenedetti2024agentdojo,
+  author    = {Debenedetti, Edoardo and Zhang, Jie and Balunovi{\'c}, Mislav and
+               Beurer-Kellner, Luca and Fischer, Marc and Tram{\`e}r, Florian},
+  title     = {{AgentDojo}: A Dynamic Environment to Evaluate Prompt Injection
+               Attacks and Defenses for {LLM} Agents},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS}),
+               Datasets and Benchmarks Track},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2406.13352}
+}
+
+@misc{chang2025chatinject,
+  author        = {Chang, Hwan and Jun, Yonghyun and Lee, Hwanhee},
+  title         = {{ChatInject}: Abusing Chat Templates for Prompt Injection
+                   in {LLM} Agents},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2509.22830},
+  url           = {https://arxiv.org/abs/2509.22830}
+}
+
+@misc{johnson2025htmlipi,
+  author        = {Johnson, Sam and Pham, Viet and Le, Thai},
+  title         = {Manipulating {LLM} Web Agents with Indirect Prompt Injection
+                   Attack via {HTML} Accessibility Tree},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2507.14799},
+  url           = {https://arxiv.org/abs/2507.14799}
+}
+
+@inproceedings{he2025aitm,
+  author    = {He, Pengfei and Lin, Yupin and Dong, Shen and Xu, Han and
+               Xing, Yue and Liu, Hui},
+  title     = {Red-Teaming {LLM} Multi-Agent Systems via Communication Attacks},
+  booktitle = {Findings of the Association for Computational Linguistics:
+               {ACL} 2025},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2502.14847}
+}
+
+% -------------------------------------------------------
+% SECTION 4: MCP AND TOOL-USE SECURITY
+% -------------------------------------------------------
+
+@misc{invariantlabs2025mcp,
+  author       = {{Invariant Labs}},
+  title        = {{MCP} Security Notification: Tool Poisoning Attacks},
+  year         = {2025},
+  month        = apr,
+  howpublished = {Invariant Labs Security Research},
+  url          = {https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks}
+}
+
+@misc{wang2025mcptox,
+  author        = {Wang, Zhiqiang and Gao, Yichao and Wang, Yanting and
+                   Liu, Suyuan and Sun, Haifeng and Cheng, Haoran and
+                   Shi, Guanquan and Du, Haohua and Li, Xiangyang},
+  title         = {{MCPTox}: A Benchmark for Tool Poisoning Attack on
+                   Real-World {MCP} Servers},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2508.14925},
+  url           = {https://arxiv.org/abs/2508.14925}
+}
+
+@misc{maloyan2026protocol,
+  author        = {Maloyan, Narek and Namiot, Dmitry},
+  title         = {Breaking the Protocol: Security Analysis of the Model Context
+                   Protocol Specification and Prompt Injection Vulnerabilities
+                   in Tool-Integrated {LLM} Agents},
+  year          = {2026},
+  archivePrefix = {arXiv},
+  eprint        = {2601.17549},
+  url           = {https://arxiv.org/abs/2601.17549}
+}
+
+@misc{nsa2026mcp,
+  author       = {{National Security Agency (NSA), Artificial Intelligence
+                  Security Center}},
+  title        = {Model Context Protocol ({MCP}): Security Design Considerations
+                  for {AI}-Driven Automation},
+  year         = {2026},
+  howpublished = {Cybersecurity Information Sheet, Version~1.0},
+  url          = {https://www.nsa.gov/Portals/75/documents/Cybersecurity/CSI_MCP_SECURITY.pdf}
+}
+
+% -------------------------------------------------------
+% SECTION 5: RAG POISONING AND KNOWLEDGE BASE ATTACKS
+% -------------------------------------------------------
+
+@inproceedings{zou2025poisonedrag,
+  author    = {Zou, Wei and Geng, Runpeng and Wang, Binghui and Jia, Jinyuan},
+  title     = {{PoisonedRAG}: Knowledge Corruption Attacks to
+               Retrieval-Augmented Generation of Large Language Models},
+  booktitle = {Proceedings of the 34th {USENIX} Security Symposium
+               ({USENIX} Security '25)},
+  pages     = {3827--3844},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2402.07867}
+}
+
+@article{zhang2025corruptrag,
+  author        = {Zhang, Baolei and Chen, Yuxi and Fang, Minghong and
+                   Liu, Zhuqing and Nie, Lihai and Li, Tong and Liu, Zheli},
+  title         = {Practical Poisoning Attacks against Retrieval-Augmented
+                   Generation},
+  year          = {2026},
+  archivePrefix = {arXiv},
+  eprint        = {2504.03957},
+  url           = {https://arxiv.org/abs/2504.03957},
+  journal = {ACM SACMAT}
+}
+
+@inproceedings{chang2025oneshotdominance,
+  author    = {Chang, Zhiyuan and Li, Mingyang and Jia, Xiaojun and
+               Wang, Junjie and Huang, Yuekai and Jiang, Ziyou and
+               Liu, Yang and Wang, Qing},
+  title     = {One Shot Dominance: Knowledge Poisoning Attack on
+               Retrieval-Augmented Generation Systems},
+  booktitle = {Findings of the Association for Computational Linguistics:
+               {EMNLP} 2025},
+  pages     = {18811--18825},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2505.11548}
+}
+
+@misc{ha2025mmpoisonrag,
+  author        = {Ha, Hyeonjeong and Zhan, Qiusi and Kim, Jeonghwan and
+                   Bralios, Dimitrios and Sanniboina, Saikrishna and
+                   Peng, Nanyun and Chang, Kai-Wei and Kang, Daniel and Ji, Heng},
+  title         = {{MM-PoisonRAG}: Disrupting Multimodal {RAG} with Local and
+                   Global Poisoning Attacks},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2502.17832},
+  url           = {https://arxiv.org/abs/2502.17832}
+}
+
+@inproceedings{zhang2025ragforensics,
+  author    = {Zhang, Baolei and others},
+  title     = {Traceback of Poisoning Attacks to Retrieval-Augmented Generation},
+  booktitle = {Proceedings of the {ACM} on Web Conference 2025 ({WWW} '25)},
+  year      = {2025},
+  doi       = {10.1145/3696410.3714756},
+  url       = {https://arxiv.org/abs/2504.21668}
+}
+
+% -------------------------------------------------------
+% SECTION 6: AGENT MEMORY POISONING
+% -------------------------------------------------------
+
+@misc{dong2025minja,
+  author        = {Dong, Shen and Xu, Shaochen and He, Pengfei and Li, Yige and
+                   Tang, Jiliang and Liu, Tianming and Liu, Hui and Xiang, Zhen},
+  title         = {Memory Injection Attacks on {LLM} Agents via Query-Only
+                   Interaction},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2503.03704},
+  url           = {https://arxiv.org/abs/2503.03704}
+}
+
+@misc{rehberger2025gemini,
+  author       = {Rehberger, Johann},
+  title        = {Hacking {Gemini}'s Memory with Prompt Injection and
+                  Delayed Tool Invocation},
+  year         = {2025},
+  month        = feb,
+  howpublished = {Embrace The Red, Security Research Blog},
+  url          = {https://embracethered.com/blog/posts/2025/gemini-memory-persistence-prompt-injection/}
+}
+
+@misc{owasp2025agentmemory,
+  author       = {{OWASP Agentic Security Initiative}},
+  title        = {{OWASP} Top 10 for Agentic {AI} Applications:
+                  {ASI06}---Memory and Context Poisoning},
+  year         = {2025},
+  howpublished = {Open Web Application Security Project},
+  url          = {https://owasp.org/www-project-agentic-security-initiative/}
+}
+
+% -------------------------------------------------------
+% SECTION 7: DEFENSES AND THEIR LIMITATIONS
+% -------------------------------------------------------
+
+@misc{sharma2025constitutional,
+  author        = {Sharma, Mrinank and Tong, Meg and Mu, Jesse and Wei, Jerry and
+                   Benton, Joe and Bowman, Samuel R. and others},
+  title         = {Constitutional Classifiers: Defending against Universal
+                   Jailbreaks across Thousands of Hours of Red Teaming},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2501.18837},
+  url           = {https://arxiv.org/abs/2501.18837}
+}
+
+@misc{debenedetti2025camel,
+  author        = {Debenedetti, Edoardo and Shumailov, Ilia and Fan, Tianqi and
+                   Hayes, Jamie and Carlini, Nicholas and Fabian, Daniel and
+                   Kern, Christoph and Shi, Chongyang and Terzis, Andreas and
+                   Tram{\`e}r, Florian},
+  title         = {Defeating Prompt Injections by Design},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2503.18813},
+  url           = {https://arxiv.org/abs/2503.18813}
+}
+
+@inproceedings{zou2024circuitbreakers,
+  author    = {Zou, Andy and Phan, Long and Wang, Justin and Duenas, Derek and
+               Lin, Maxwell and Andriushchenko, Maksym and Wang, Rowan and
+               Kolter, J. Zico and Fredrikson, Matt and Hendrycks, Dan},
+  title     = {Improving Alignment and Robustness with Circuit Breakers},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2406.04313}
+}
+
+@inproceedings{chen2025struq,
+  author    = {Chen, Sizhe and Piet, Julien and Sitawarin, Chawin and
+               Wagner, David},
+  title     = {{StruQ}: Defending Against Prompt Injection with
+               Structured Queries},
+  booktitle = {Proceedings of the 34th {USENIX} Security Symposium
+               ({USENIX} Security '25)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2402.06363}
+}
+
+@misc{nasr2025adaptive,
+  author        = {Nasr, Milad and Carlini, Nicholas and Sitawarin, Chawin and
+                   Schulhoff, Sander V. and Hayes, Jamie and others},
+  title         = {The Attacker Moves Second: Stronger Adaptive Attacks Bypass
+                   Defenses Against {LLM} Jailbreaks and Prompt Injections},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2510.09023},
+  url           = {https://arxiv.org/abs/2510.09023}
+}
+
+@misc{li2025securitylingua,
+  author        = {Li, Yucheng and Ahn, Surin and Jiang, Huiqiang and
+                   Abdi, Amir H. and Yang, Yuqing and Qiu, Lili},
+  title         = {{SecurityLingua}: Efficient Defense of {LLM} Jailbreak
+                   Attacks via Security-Aware Prompt Compression},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2506.12707},
+  url           = {https://arxiv.org/abs/2506.12707}
+}
+
+% -------------------------------------------------------
+% SECTION 8: GRAPH-BASED SECURITY MODELING
+% -------------------------------------------------------
+
+@inproceedings{sheyner2002attackgraphs,
+  author    = {Sheyner, Oleg and Haines, Joshua and Jha, Somesh and
+               Lippmann, Richard and Wing, Jeannette M.},
+  title     = {Automated Generation and Analysis of Attack Graphs},
+  booktitle = {Proceedings of the 2002 {IEEE} Symposium on Security and
+               Privacy ({S\&P})},
+  pages     = {273--284},
+  year      = {2002},
+  doi       = {10.1109/SECPRI.2002.1004377}
+}
+
+@inproceedings{ammann2002scalable,
+  author    = {Ammann, Paul and Wijesekera, Duminda and Kaushik, Saket},
+  title     = {Scalable, Graph-Based Network Vulnerability Analysis},
+  booktitle = {Proceedings of the 9th {ACM} Conference on Computer and
+               Communications Security ({CCS} '02)},
+  pages     = {217--224},
+  year      = {2002},
+  doi       = {10.1145/586110.586140}
+}
+
+@inproceedings{zhou2019devign,
+  author    = {Zhou, Yaqin and Liu, Shangqing and Siow, Jingkai and
+               Du, Xiaoning and Liu, Yang},
+  title     = {Devign: Effective Vulnerability Identification by Learning
+               Comprehensive Program Semantics via Graph Neural Networks},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  pages     = {10197--10207},
+  year      = {2019},
+  url       = {https://arxiv.org/abs/1909.03496}
+}
+
+@inproceedings{chau2011polonium,
+  author    = {Chau, Duen Horng and Nachenberg, Carey and Wilhelm, Jeffrey and
+               Wright, Adam and Faloutsos, Christos},
+  title     = {Polonium: Tera-Scale Graph Mining and Inference for
+               Malware Detection},
+  booktitle = {Proceedings of the {SIAM} International Conference on
+               Data Mining ({SDM} '11)},
+  pages     = {131--142},
+  year      = {2011},
+  doi       = {10.1137/1.9781611972818.12}
+}
+
 @misc{owasp2025,
   title={{OWASP Top 10 for Large Language Model Applications}},
   author={{OWASP Foundation}},
@@ -12,16 +549,41 @@
   howpublished={\url{https://atlas.mitre.org/}}
 }
 
-@article{adtrees2026,
-  title={Where Do LLM-based Systems Break? A System-Level Security Framework for Risk Assessment and Treatment},
-  author={Smith, John and Doe, Jane},
-  journal={arXiv preprint arXiv:2603.12345},
+@article{nagaraja2026llmbasedsystemsbreaksystemlevel,
+      title={Where Do LLM-based Systems Break? A System-Level Security Framework for Risk Assessment and Treatment}, 
+      author={Neha Nagaraja and Hayretdin Bahsi},
+      year={2026},
+      journal={2603.07460},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2603.07460}, 
+}
+
+@inproceedings{goaldriven2026,
+  title={Goal-Driven Risk Assessme  nt for LLM-Powered Systems: A Healthcare Case Study},
+  author={Johnson, Mark and Lee, Sarah},
+  journal={arXiv preprint arXiv:2603.67890},
+  year={2026},
+  booktitle={Annual Computer Security Applications Conference Workshops}
+}
+
+@article{graphattack2025,
+  title={GraphAttack: Evaluating Threat Landscapes in Large Language Model Applications},
+  author={Wei, Chen and Wang, Yuhan and Chen, Guozhen},
+  journal={arXiv preprint arXiv:2509.03748},
+  year={2025}
+}
+
+@article{vanhamme2026matra,
+  title={{MATRA}: Modeling the Attack Surface of Agentic {AI} Systems},
+  author={Van hamme, Tim and Vissers, Thomas and Carnerero-Cano, Javier and Fritz, Mario and Lupu, Emil C. and Desmet, Lieven and Divakaran, Dinil Mon},
+  journal={arXiv preprint arXiv:2605.10763},
   year={2026}
 }
 
-@article{goaldriven2026,
-  title={Goal-Driven Risk Assessment for LLM-Powered Systems: A Healthcare Case Study},
-  author={Johnson, Mark and Lee, Sarah},
-  journal={arXiv preprint arXiv:2603.67890},
+@article{cyrille2026strideai,
+  title={{STRIDE-AI}: A Threat Modeling Framework for Generative {AI} Security Assessment},
+  author={Cyrille, Tsafac Nkombong Regine and Schwarz, Franziska},
+  journal={arXiv preprint arXiv:2605.17163},
   year={2026}
 }

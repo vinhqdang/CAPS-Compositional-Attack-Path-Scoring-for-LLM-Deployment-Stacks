@@ -1,0 +1,294 @@
+\begin{thebibliography}{}
+
+\bibitem[Ammann et~al., 2002]{ammann2002scalable}
+Ammann, P., Wijesekera, D., and Kaushik, S. (2002).
+\newblock Scalable, graph-based network vulnerability analysis.
+\newblock In {\em Proceedings of the 9th {ACM} Conference on Computer and
+  Communications Security ({CCS} '02)}, pages 217--224.
+
+\bibitem[Anil et~al., 2024]{anil2024manyshot}
+Anil, C., Durmus, E., Sharma, M., Benton, J., et~al. (2024).
+\newblock Many-shot jailbreaking.
+\newblock Anthropic Research.
+
+\bibitem[Ben-Tov et~al., 2025]{bentov2025jailbreakattention}
+Ben-Tov, M., Geva, M., and Sharif, M. (2025).
+\newblock Universal jailbreak suffixes are strong attention hijackers.
+\newblock {\em arXiv 2506.12880}.
+
+\bibitem[Chang et~al., 2025a]{chang2025chatinject}
+Chang, H., Jun, Y., and Lee, H. (2025a).
+\newblock {ChatInject}: Abusing chat templates for prompt injection in {LLM}
+  agents.
+
+\bibitem[Chang et~al., 2025b]{chang2025oneshotdominance}
+Chang, Z., Li, M., Jia, X., Wang, J., Huang, Y., Jiang, Z., Liu, Y., and Wang,
+  Q. (2025b).
+\newblock One shot dominance: Knowledge poisoning attack on retrieval-augmented
+  generation systems.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  {EMNLP} 2025}, pages 18811--18825.
+
+\bibitem[Chao et~al., 2024]{chao2024jailbreakbench}
+Chao, P., Debenedetti, E., Robey, A., Andriushchenko, M., Croce, F., Sehwag,
+  V., Dobriban, E., Flammarion, N., Pappas, G.~J., Tram{\`e}r, F., Hassani, H.,
+  and Wong, E. (2024).
+\newblock {JailbreakBench}: An open robustness benchmark for jailbreaking large
+  language models.
+\newblock In {\em Advances in Neural Information Processing Systems
+  ({NeurIPS}), Datasets and Benchmarks Track}.
+
+\bibitem[Chao et~al., 2023]{chao2023pair}
+Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G.~J., and Wong, E.
+  (2023).
+\newblock Jailbreaking black box large language models in twenty queries.
+
+\bibitem[Chau et~al., 2011]{chau2011polonium}
+Chau, D.~H., Nachenberg, C., Wilhelm, J., Wright, A., and Faloutsos, C. (2011).
+\newblock Polonium: Tera-scale graph mining and inference for malware
+  detection.
+\newblock In {\em Proceedings of the {SIAM} International Conference on Data
+  Mining ({SDM} '11)}, pages 131--142.
+
+\bibitem[Chen et~al., 2025]{chen2025struq}
+Chen, S., Piet, J., Sitawarin, C., and Wagner, D. (2025).
+\newblock {StruQ}: Defending against prompt injection with structured queries.
+\newblock In {\em Proceedings of the 34th {USENIX} Security Symposium ({USENIX}
+  Security '25)}.
+
+\bibitem[Cyrille and Schwarz, 2026]{cyrille2026strideai}
+Cyrille, T. N.~R. and Schwarz, F. (2026).
+\newblock {STRIDE-AI}: A threat modeling framework for generative {AI} security
+  assessment.
+\newblock {\em arXiv preprint arXiv:2605.17163}.
+
+\bibitem[Dang et~al., 2025]{dang2025lasm}
+Dang, Q.-V., Dinh, M.~N., and Le, A.~D. (2025).
+\newblock {LASM}: A unified measurement framework for {LLM}-based system
+  security --- attack surface quantification, standardized evaluation, and
+  temporal robustness.
+\newblock Manuscript under review.
+
+\bibitem[Debenedetti et~al., 2025]{debenedetti2025camel}
+Debenedetti, E., Shumailov, I., Fan, T., Hayes, J., Carlini, N., Fabian, D.,
+  Kern, C., Shi, C., Terzis, A., and Tram{\`e}r, F. (2025).
+\newblock Defeating prompt injections by design.
+
+\bibitem[Debenedetti et~al., 2024]{debenedetti2024agentdojo}
+Debenedetti, E., Zhang, J., Balunovi{\'c}, M., Beurer-Kellner, L., Fischer, M.,
+  and Tram{\`e}r, F. (2024).
+\newblock {AgentDojo}: A dynamic environment to evaluate prompt injection
+  attacks and defenses for {LLM} agents.
+\newblock In {\em Advances in Neural Information Processing Systems
+  ({NeurIPS}), Datasets and Benchmarks Track}.
+
+\bibitem[Dong et~al., 2025]{dong2025minja}
+Dong, S., Xu, S., He, P., Li, Y., Tang, J., Liu, T., Liu, H., and Xiang, Z.
+  (2025).
+\newblock Memory injection attacks on {LLM} agents via query-only interaction.
+
+\bibitem[Greshake et~al., 2023]{greshake2023indirect}
+Greshake, K., Abdelnabi, S., Mishra, S., Endres, C., Holz, T., and Fritz, M.
+  (2023).
+\newblock Not what you've signed up for: Compromising real-world
+  {LLM}-integrated applications with indirect prompt injection.
+\newblock In {\em Proceedings of the 16th {ACM} Workshop on Artificial
+  Intelligence and Security ({AISec} '23)}.
+
+\bibitem[Ha et~al., 2025]{ha2025mmpoisonrag}
+Ha, H., Zhan, Q., Kim, J., Bralios, D., Sanniboina, S., Peng, N., Chang, K.-W.,
+  Kang, D., and Ji, H. (2025).
+\newblock {MM-PoisonRAG}: Disrupting multimodal {RAG} with local and global
+  poisoning attacks.
+
+\bibitem[Hagendorff et~al., 2026]{hagendorff2026lrms}
+Hagendorff, T., Derner, E., and Oliver, N. (2026).
+\newblock Large reasoning models are autonomous jailbreak agents.
+\newblock {\em Nature Communications}, 17:1435.
+
+\bibitem[He et~al., 2025]{he2025aitm}
+He, P., Lin, Y., Dong, S., Xu, H., Xing, Y., and Liu, H. (2025).
+\newblock Red-teaming {LLM} multi-agent systems via communication attacks.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  {ACL} 2025}.
+
+\bibitem[{Invariant Labs}, 2025]{invariantlabs2025mcp}
+{Invariant Labs} (2025).
+\newblock {MCP} security notification: Tool poisoning attacks.
+\newblock Invariant Labs Security Research.
+
+\bibitem[Johnson and Lee, 2026]{goaldriven2026}
+Johnson, M. and Lee, S. (2026).
+\newblock Goal-driven risk assessme nt for llm-powered systems: A healthcare
+  case study.
+\newblock In {\em Annual Computer Security Applications Conference Workshops}.
+
+\bibitem[Johnson et~al., 2025]{johnson2025htmlipi}
+Johnson, S., Pham, V., and Le, T. (2025).
+\newblock Manipulating {LLM} web agents with indirect prompt injection attack
+  via {HTML} accessibility tree.
+
+\bibitem[Kuo et~al., 2025]{kuo2025hcot}
+Kuo, M., Zhang, J., Ding, A., Wang, Q., DiValentin, L., Bao, Y., Wei, W., Li,
+  H., and Chen, Y. (2025).
+\newblock {H-CoT}: Hijacking the chain-of-thought safety reasoning mechanism to
+  jailbreak large reasoning models, including {OpenAI} o1/o3, {DeepSeek-R1},
+  and {Gemini 2.0 Flash Thinking}.
+
+\bibitem[Li et~al., 2025]{li2025securitylingua}
+Li, Y., Ahn, S., Jiang, H., Abdi, A.~H., Yang, Y., and Qiu, L. (2025).
+\newblock {SecurityLingua}: Efficient defense of {LLM} jailbreak attacks via
+  security-aware prompt compression.
+
+\bibitem[Liu et~al., 2025]{liu2025autodan}
+Liu, X., Li, P., Suh, E., Vorobeychik, Y., Mao, Z., Jha, S., McDaniel, P., Sun,
+  H., Li, B., and Xiao, C. (2025).
+\newblock {AutoDAN-Turbo}: A lifelong agent for strategy self-exploration to
+  jailbreak {LLMs}.
+\newblock In {\em Proceedings of the 13th International Conference on Learning
+  Representations ({ICLR})}.
+\newblock Spotlight.
+
+\bibitem[Liu and Xiao, 2025]{liu2025autodanreasoning}
+Liu, X. and Xiao, C. (2025).
+\newblock {AutoDAN-Reasoning}: Enhancing strategies exploration based jailbreak
+  attacks with test-time scaling.
+\newblock {\em arXiv 2510.05379}.
+
+\bibitem[Maloyan and Namiot, 2026]{maloyan2026protocol}
+Maloyan, N. and Namiot, D. (2026).
+\newblock Breaking the protocol: Security analysis of the model context
+  protocol specification and prompt injection vulnerabilities in
+  tool-integrated {LLM} agents.
+
+\bibitem[Manadhata and Wing, 2011]{manadhata2011attack}
+Manadhata, P.~K. and Wing, J.~M. (2011).
+\newblock An attack surface metric.
+\newblock {\em {IEEE} Transactions on Software Engineering}, 37(3):371--386.
+
+\bibitem[Mazeika et~al., 2024]{mazeika2024harmbench}
+Mazeika, M., Phan, L., Yin, X., Zou, A., Wang, Z., Mu, N., Sakhaee, E., Li, N.,
+  Basart, S., Li, B., Forsyth, D., and Hendrycks, D. (2024).
+\newblock {HarmBench}: A standardized evaluation framework for automated red
+  teaming and robust refusal.
+\newblock In {\em Proceedings of the 41st International Conference on Machine
+  Learning ({ICML})}, volume 235 of {\em Proceedings of Machine Learning
+  Research}, pages 35181--35224.
+
+\bibitem[Nagaraja and Bahsi, 2026]{nagaraja2026llmbasedsystemsbreaksystemlevel}
+Nagaraja, N. and Bahsi, H. (2026).
+\newblock Where do llm-based systems break? a system-level security framework
+  for risk assessment and treatment.
+\newblock {\em 2603.07460}.
+
+\bibitem[Nasr et~al., 2025]{nasr2025adaptive}
+Nasr, M., Carlini, N., Sitawarin, C., Schulhoff, S.~V., Hayes, J., et~al.
+  (2025).
+\newblock The attacker moves second: Stronger adaptive attacks bypass defenses
+  against {LLM} jailbreaks and prompt injections.
+
+\bibitem[{National Security Agency (NSA), Artificial Intelligence Security
+  Center}, 2026]{nsa2026mcp}
+{National Security Agency (NSA), Artificial Intelligence Security Center}
+  (2026).
+\newblock Model context protocol ({MCP}): Security design considerations for
+  {AI}-driven automation.
+\newblock Cybersecurity Information Sheet, Version~1.0.
+
+\bibitem[Nguyen et~al., 2025]{nguyen2025seal}
+Nguyen, V.-A., Zhao, S., Dao, G., Hu, R., Xie, Y., and Tuan, L.~A. (2025).
+\newblock Three minds, one legend: Jailbreak large reasoning model with
+  adaptive stacked ciphers.
+\newblock {\em arXiv 2505.16241}.
+
+\bibitem[Russinovich et~al., 2025]{russinovich2025crescendo}
+Russinovich, M., Salem, A., and Eldan, R. (2025).
+\newblock Great, now write an article about that: The {Crescendo} multi-turn
+  {LLM} jailbreak attack.
+\newblock In {\em Proceedings of the 34th {USENIX} Security Symposium ({USENIX}
+  Security '25)}, pages 2421--2440.
+
+\bibitem[Sharma et~al., 2025]{sharma2025constitutional}
+Sharma, M., Tong, M., Mu, J., Wei, J., Benton, J., Bowman, S.~R., et~al.
+  (2025).
+\newblock Constitutional classifiers: Defending against universal jailbreaks
+  across thousands of hours of red teaming.
+
+\bibitem[Sheyner et~al., 2002]{sheyner2002attackgraphs}
+Sheyner, O., Haines, J., Jha, S., Lippmann, R., and Wing, J.~M. (2002).
+\newblock Automated generation and analysis of attack graphs.
+\newblock In {\em Proceedings of the 2002 {IEEE} Symposium on Security and
+  Privacy ({S\&P})}, pages 273--284.
+
+\bibitem[Souly et~al., 2024]{souly2024strongreject}
+Souly, A., Lu, Q., Bowen, D., Trinh, T., Hsieh, E., Pandey, S., Abbeel, P.,
+  Svegliato, J., Emmons, S., Watkins, O., and Toyer, S. (2024).
+\newblock A {StrongREJECT} for empty jailbreaks.
+\newblock In {\em Advances in Neural Information Processing Systems
+  ({NeurIPS})}.
+
+\bibitem[Van~hamme et~al., 2026]{vanhamme2026matra}
+Van~hamme, T., Vissers, T., Carnerero-Cano, J., Fritz, M., Lupu, E.~C., Desmet,
+  L., and Divakaran, D.~M. (2026).
+\newblock {MATRA}: Modeling the attack surface of agentic {AI} systems.
+\newblock {\em arXiv preprint arXiv:2605.10763}.
+
+\bibitem[Wang et~al., 2025]{wang2025mcptox}
+Wang, Z., Gao, Y., Wang, Y., Liu, S., Sun, H., Cheng, H., Shi, G., Du, H., and
+  Li, X. (2025).
+\newblock {MCPTox}: A benchmark for tool poisoning attack on real-world {MCP}
+  servers.
+
+\bibitem[Zhan et~al., 2024]{zhan2024injecagent}
+Zhan, Q., Liang, Z., Ying, Z., and Kang, D. (2024).
+\newblock {InjecAgent}: Benchmarking indirect prompt injections in
+  tool-integrated large language model agents.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  {ACL} 2024}, pages 10471--10506.
+
+\bibitem[Zhang et~al., 2026]{zhang2025corruptrag}
+Zhang, B., Chen, Y., Fang, M., Liu, Z., Nie, L., Li, T., and Liu, Z. (2026).
+\newblock Practical poisoning attacks against retrieval-augmented generation.
+\newblock {\em ACM SACMAT}.
+
+\bibitem[Zhang et~al., 2025a]{zhang2025ragforensics}
+Zhang, B. et~al. (2025a).
+\newblock Traceback of poisoning attacks to retrieval-augmented generation.
+\newblock In {\em Proceedings of the {ACM} on Web Conference 2025 ({WWW} '25)}.
+
+\bibitem[Zhang et~al., 2025b]{zhang2025asb}
+Zhang, H., Huang, J., Mei, K., Yao, Y., Wang, Z., Zhan, C., Wang, H., and
+  Zhang, Y. (2025b).
+\newblock Agent security bench ({ASB}): Formalizing and benchmarking attacks
+  and defenses in {LLM}-based agents.
+\newblock In {\em Proceedings of the 13th International Conference on Learning
+  Representations ({ICLR})}.
+
+\bibitem[Zhou et~al., 2019]{zhou2019devign}
+Zhou, Y., Liu, S., Siow, J., Du, X., and Liu, Y. (2019).
+\newblock Devign: Effective vulnerability identification by learning
+  comprehensive program semantics via graph neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems
+  ({NeurIPS})}, pages 10197--10207.
+
+\bibitem[Zou et~al., 2024]{zou2024circuitbreakers}
+Zou, A., Phan, L., Wang, J., Duenas, D., Lin, M., Andriushchenko, M., Wang, R.,
+  Kolter, J.~Z., Fredrikson, M., and Hendrycks, D. (2024).
+\newblock Improving alignment and robustness with circuit breakers.
+\newblock In {\em Advances in Neural Information Processing Systems
+  ({NeurIPS})}.
+
+\bibitem[Zou et~al., 2023]{zou2023gcg}
+Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J.~Z., and Fredrikson, M.
+  (2023).
+\newblock Universal and transferable adversarial attacks on aligned language
+  models.
+
+\bibitem[Zou et~al., 2025]{zou2025poisonedrag}
+Zou, W., Geng, R., Wang, B., and Jia, J. (2025).
+\newblock {PoisonedRAG}: Knowledge corruption attacks to retrieval-augmented
+  generation of large language models.
+\newblock In {\em Proceedings of the 34th {USENIX} Security Symposium ({USENIX}
+  Security '25)}, pages 3827--3844.
+
+\end{thebibliography}

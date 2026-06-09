@@ -1,14 +1,299 @@
+% ============================================================
+% caps_related_work.tex
+% \section{Related Work} for CAPS paper
+% Compile with: pdflatex + bibtex (or biber)
+% Suggested style: \bibliographystyle{unsrt} or IEEEtran
+% ============================================================
+
 \section{Related Work}
+\label{sec:related}
 
-The security of Large Language Model (LLM) deployment stacks has rapidly evolved from evaluating isolated components to understanding holistic system vulnerabilities. Recent literature highlights several approaches to vulnerability and attack path scoring.
+\subsection{LLM Attack Surface Measurement and Evaluation Frameworks}
 
-\subsection{Component-Level Vulnerability Scoring}
-Early approaches to LLM security relied heavily on adapting traditional scoring systems to AI components. The OWASP Top 10 for LLM Applications (2025 Edition) serves as the industry standard for identifying critical vulnerabilities such as Prompt Injection and Excessive Agency \cite{owasp2025}. In this baseline approach, risk is calculated by assessing the highest severity vulnerability of isolated components using the Common Vulnerability Scoring System (CVSS) independently. While useful for component patching, this method either overestimates risk by ignoring downstream defenses or underestimates it by failing to capture how multiple medium-risk vulnerabilities can compound into a critical compromise.
+The notion of a software attack surface was formally introduced by Manadhata
+and Wing~\cite{manadhata2011attack}, who define it as the weighted set of
+methods, channels, and data items through which an adversary can compromise a
+system, with weights encoding damage potential relative to attacker effort.
+While foundational for traditional software, this formulation does not
+accommodate the probabilistic, prompt-driven nature of LLM systems, in which
+every token sequence is a potential attack vector and exploitation is
+inherently stochastic.
 
-\subsection{Threat Modeling and Qualitative Assessment}
-Qualitative frameworks such as MITRE ATLAS (Adversarial Threat Landscape for AI Systems) have been instrumental in mapping adversarial tactics, techniques, and procedures (TTPs) across the LLM pipeline \cite{mitre2025}. These frameworks provide an essential taxonomy from reconnaissance to exfiltration. However, they lack a quantitative, automated engine to prioritize which paths pose the greatest numerical risk or return on investment (ROI) for mitigation.
+The LLM security community has responded with several benchmark-level
+evaluation frameworks.
+HarmBench~\cite{mazeika2024harmbench} provides the first standardized
+comparison of 18 red-teaming methods against 33 target models across seven
+harm categories using a curated 400-behavior dataset.
+JailbreakBench~\cite{chao2024jailbreakbench} complements this with an evolving
+artifact repository, a curated 100-behavior dataset, and a public leaderboard,
+directly addressing the field's reproducibility and incomparability problems.
+StrongREJECT~\cite{souly2024strongreject} identifies a systematic measurement
+validity problem in both: existing automated evaluators substantially
+overstate attack effectiveness because they score \emph{non-refusal} rather
+than \emph{useful harm}, and show that many ``successful'' jailbreaks degrade
+the model's ability to provide actionable adversarial information.
+For agentic deployments, the Agent Security Bench
+(ASB)~\cite{zhang2025asb} covers 10 scenarios, 400+ tools, and 27
+attack/defense methods across 13 LLM backends, introducing the Net Resilient
+Performance metric to jointly quantify utility and security.
+The OWASP Top 10 for LLM Applications 2025\footnote{\url{https://genai.owasp.org/llm-top-10/}} and the
+companion OWASP MCP Top 10\footnote{\url{https://owasp.org/www-project-mcp-top-10/}} provide practitioner
+taxonomies that span prompt injection, RAG poisoning, excessive agency, and
+MCP-specific tool poisoning risks across modern deployment stacks.
 
-\subsection{Attack Path Analysis in LLMs}
-More recently in 2026, the focus has shifted toward formal attack path analysis. A notable framework models LLM-enabled systems using Attack-Defense Trees (ADTrees) combined with CVSS exploitability scoring \cite{adtrees2026}. This approach bridges abstract AI security with traditional IT security by mapping multi-step paths. Similarly, a goal-driven risk assessment framework for LLM-powered healthcare systems utilizes a structured Likelihood $\times$ Impact calculation across attack trees to score agent hijacking and data extraction risks \cite{goaldriven2026}. 
+Concurrently, Dang~et~al.~\cite{dang2025lasm} propose LASM, a unified
+measurement framework that introduces five interlocking metrics (LAS, SASR,
+TRC, EAS, ADT) jointly quantifying structural vulnerability, temporal defense
+degradation, and game-theoretic economic deterrence. LASM introduces an
+Integrational Composability Factor ($\alpha$) as a uniform scalar multiplier
+for multi-agent deployments. However, $\alpha$ does not identify
+\emph{which} attack vectors compose with \emph{which} others, nor does it
+score the specific cross-layer paths responsible for elevated risk. CAPS
+addresses this gap by replacing $\alpha$ with a full per-edge conditional
+probability matrix and a path-propagation algorithm that identifies and scores
+end-to-end attack chains.
 
-While these 2026 baselines successfully map attack chains, CAPS differentiates itself by introducing an explicit exponential decay factor ($\alpha^{k-1}$) to model the complexity of multi-hop exploits, and by dynamically calculating "Effective Exploitability" based on active defense mitigations at each layer.
+Despite this body of work, all existing frameworks evaluate attacks
+\emph{in isolation} on a single deployment layer. No framework models how
+success at layer $L$ amplifies risk at layer $L+1$. CAPS is the first
+measurement framework built specifically to quantify that cross-layer
+composability.
+
+% -------------------------------------------------------
+
+\subsection{Jailbreak Attacks Against LLMs and Reasoning Models}
+
+Adversarial attacks on aligned LLMs originate with Greedy Coordinate Gradient
+(GCG)~\cite{zou2023gcg}, which optimizes adversarial suffixes via white-box
+gradient access, achieving near-100\% attack success rate (ASR) on open-weight
+models with notable transfer to black-box APIs. Prompt Automatic Iterative
+Refinement (PAIR)~\cite{chao2023pair} demonstrated that semantic, black-box
+jailbreaks can succeed in approximately 20 queries---reducing attacker cost by
+up to 250$\times$ relative to GCG. AutoDAN-Turbo~\cite{liu2025autodan}
+extends black-box efficiency through lifelong strategy self-exploration,
+achieving 74.3\% higher average ASR than baselines and 88.5\% on
+GPT-4-1106-turbo; AutoDAN-Reasoning~\cite{liu2025autodanreasoning} further
+adds test-time scaling (Best-of-N, Beam Search), increasing ASR by up to 15.6
+percentage points against instruction-tuned models and 12.5 points against
+reasoning models.
+
+Multi-turn escalation attacks represent a structurally distinct threat model.
+Crescendo~\cite{russinovich2025crescendo} exploits the tendency of LLMs to
+follow patterns and attend to recent context, escalating gradually from a
+benign opening over fewer than five turns to achieve near-100\% ASR on GPT-4,
+GPT-3.5, Gemini-Pro, and Llama-2-70B across high-risk task categories.
+Many-shot jailbreaking~\cite{anil2024manyshot} exploits extended context
+windows by prepending hundreds of faux harmful dialogues, with effectiveness
+growing as a power law in the number of in-context shots.
+
+A fundamentally new class of attacks emerged in 2025 targeting
+\emph{reasoning traces}. H-CoT~\cite{kuo2025hcot} injects mock
+chain-of-thought to hijack the safety reasoning mechanism of frontier LRMs,
+collapsing refusal rates on OpenAI o1/o3, DeepSeek-R1, and Gemini 2.0 Flash
+Thinking from approximately 98\% to near zero. SEAL~\cite{nguyen2025seal}
+uses adaptive stacked cipher obfuscation to overload the model's decryption
+reasoning, achieving 80.8\% ASR on GPT-o4-mini and outperforming prior
+baselines by 27.2 percentage points. Ben-Tov~et~al.\
+demonstrate~\cite{bentov2025jailbreakattention} that universal jailbreak
+suffixes operate via a shallow attention-hijacking mechanism, explaining
+GCG's transferability and enabling both stronger attacks and targeted
+defenses. Perhaps most alarmingly, Hagendorff~et~al.\ show that large
+reasoning models can act as autonomous adversaries~\cite{hagendorff2026lrms},
+autonomously planning and executing multi-turn jailbreak campaigns against
+widely deployed target models, with DeepSeek-R1 achieving 90\% maximum-harm
+scores.
+
+CAPS dedicates a dedicated CoT/Reasoning layer to capture these
+reasoning-trace exploits and models their downstream amplification of RAG and
+tool-layer attacks---cross-layer effects that single-surface benchmarks cannot
+measure.
+
+% -------------------------------------------------------
+
+\subsection{Prompt Injection and Agentic Attacks}
+
+Greshake~et~al.\ established the indirect prompt injection (IPI) threat
+model~\cite{greshake2023indirect}, demonstrating that LLM-integrated
+applications can be fully compromised through attacker-controlled data
+processed at inference time, with exploits including data theft, adversarial
+worming, and ecosystem contamination.
+InjecAgent~\cite{zhan2024injecagent} operationalizes IPI in tool-integrated
+agents across 1,054 test cases spanning 17 user tools and 62 attacker tools:
+even the strongest GPT-4 agent is vulnerable in 24\% of base cases, rising to
+47\% when the injection includes a reinforcing ``hacking prompt.''
+AgentDojo~\cite{debenedetti2024agentdojo} provides the field's primary dynamic
+benchmark with 97 realistic agentic tasks and 629 security test cases covering
+banking, email, and travel scenarios, using formal environment-state checks
+rather than LLM-simulated judgment for evaluation.
+
+Recent work reveals new attack delivery mechanisms.
+ChatInject~\cite{chang2025chatinject} forges native chat-template role tokens
+inside tool outputs to simulate a multi-turn persuasion sequence, raising
+AgentDojo ASR from 5.18\% to 32.05\% with strong cross-model transfer and
+resilience against prompt-based defenses. Johnson~et~al.\
+show~\cite{johnson2025htmlipi} that GCG-optimized triggers embedded in
+webpage HTML accessibility trees can hijack web-navigation agents for
+credential exfiltration and forced ad clicks. In multi-agent topologies, the
+Agent-in-the-Middle (AiTM) attack~\cite{he2025aitm} intercepts and
+manipulates inter-agent messages using an LLM-powered adversarial agent,
+achieving systemic goal corruption across MetaGPT- and ChatDev-style pipeline
+topologies without needing to compromise any individual agent.
+
+A key architectural insight motivating CAPS is that IPI at the Tool layer is
+not an isolated event: it constitutes an edge that propagates risk \emph{back}
+into the Input control flow and \emph{forward} into Memory writes---the
+structural feedback loop that makes compositional path scoring necessary.
+
+% -------------------------------------------------------
+
+\subsection{MCP and Tool-Use Security}
+
+The Model Context Protocol (MCP) created a new attack surface class in 2025.
+Invariant Labs introduced Tool Poisoning Attacks (TPA)~\cite{invariantlabs2025mcp},
+demonstrating that malicious instructions embedded in MCP server tool
+descriptions---visible to the LLM at discovery time but hidden from
+users---enable cross-server data exfiltration via a legitimate GitHub MCP
+server.
+MCPTox~\cite{wang2025mcptox} formalizes TPA across 45 live servers, 353
+authentic tools, and 10 risk categories, finding that o1-mini achieves 72.8\%
+ASR as a target agent and, critically, that more capable models are often
+\emph{more} susceptible because their enhanced reasoning improves exploitation
+of malicious instructions.
+Maloyan and Namiot conduct the first protocol-level security
+analysis~\cite{maloyan2026protocol}, identifying three structural flaws in the
+MCP specification---absence of capability attestation, unauthenticated
+bidirectional sampling, and implicit cross-server trust propagation---and
+proposing backward-compatible extensions that reduce ASR from 52.8\% to
+12.4\%.
+The NSA Artificial Intelligence Security Center issued formal guidance on MCP
+security~\cite{nsa2026mcp}, recommending least-privilege scoped tokens,
+DLP/filtering proxies, schema validation, and message-level integrity
+verification.
+
+CAPS distinguishes MCP tool-description parsing as a
+\emph{permanent, install-time} edge---active even when the user does
+nothing---rather than a runtime injection, and models ``toxic flow'' across
+MCP servers as a path traversing from the Tool layer into the Memory layer.
+
+% -------------------------------------------------------
+
+\subsection{RAG Poisoning and Knowledge Base Attacks}
+
+PoisonedRAG~\cite{zou2025poisonedrag} established that retrieval-augmented
+generation is vulnerable to knowledge-corruption attacks: injecting just five
+malicious texts---a poisoning rate of $\sim$0.0002\%---into a million-document
+corpus achieves approximately 90\% ASR across NQ, HotpotQA, and MS-MARCO.
+CorruptRAG~\cite{zhang2025corruptrag} improves practical stealth by achieving
+comparable ASR with a \emph{single} injected document, substantially lowering
+the attack's cost and detectability thresholds.
+One Shot Dominance~\cite{chang2025oneshotdominance} further shows that
+authority framing based on Chain-of-Evidence theory allows a single malicious
+document to out-compete authentic knowledge even on multi-hop questions,
+exploiting the ``authority effect'' in retrieval ranking.
+MM-PoisonRAG~\cite{ha2025mmpoisonrag} extends this threat to multimodal RAG
+pipelines, introducing both Localized Poisoning (query-specific image--text
+misinformation) and Globalized Poisoning (a single adversarial item that
+broadly disrupts cross-query reasoning).
+On the defensive side, RAGForensics~\cite{zhang2025ragforensics} provides the
+first traceback system for RAG poisoning, iteratively identifying responsible
+documents via LLM-guided attribution.
+
+CAPS models the RAG layer's edge weights using the above empirical ASR
+figures and distinguishes targeted (local) from broad (global) poisoning as
+edges with different blast radii---a distinction with direct implications for
+path-level risk propagation into downstream tool calls.
+
+% -------------------------------------------------------
+
+\subsection{Agent Memory Poisoning}
+
+Persistent memory stores introduce a class of attacks with a temporal
+structure absent from all existing benchmarks: compromise is injected at
+time $t$ but manifests at a later time $t' > t$.
+MINJA~\cite{dong2025minja} demonstrates this with memory injection attacks
+that require only normal user--agent query interactions (no privileged memory
+access), achieving a 98.2\% average memory-injection success rate and a
+76.8\% average attack success rate by exploiting retrieval-augmented
+demonstration via bridging steps, indication prompts, and progressive
+shortening.
+Rehberger\footnote{\url{https://embracethered.com/blog/posts/2025/gemini-memory-persistence-prompt-injection/}} reported a real-world Gemini memory
+exploit combining indirect prompt injection in an uploaded document with
+\emph{delayed tool invocation}: a payload activates conditionally only when
+the user utters common words such as ``yes'' or ``sure,'' thereby writing
+false long-term memories across sessions while bypassing real-time guardrails.
+OWASP has formally classified memory poisoning as a top-level agentic risk
+under ASI06\footnote{\url{https://owasp.org/www-project-agentic-security-initiative/}}, recommending anomaly detection,
+per-tenant memory segmentation, provenance tracking, and time-bounded expiry
+of unverified data.
+
+CAPS explicitly encodes deferred-activation Memory-layer edges with
+time-conditioned weights, capturing the temporal persistence that
+distinguishes memory compromise from one-shot input attacks---an
+aspect no existing benchmark measures.
+
+% -------------------------------------------------------
+
+\subsection{Defenses and Their Limitations}
+
+Several complementary defense paradigms have emerged across deployment layers.
+Anthropic's Constitutional Classifiers~\cite{sharma2025constitutional} filters
+inputs and outputs against a natural-language constitution, reducing automated
+jailbreak ASR from 86\% to 4.4\% on Claude 3.5 Sonnet across a 3,000-hour
+red-team exercise with no universal jailbreak found, at a 23.7\% inference
+overhead. CaMeL~\cite{debenedetti2025camel} takes an architectural approach,
+splitting the agent into a Privileged LLM for control flow and a Quarantined
+LLM for untrusted data, enforcing capability-based policies through a custom
+Python interpreter; it solves 77\% of AgentDojo tasks with \emph{provable}
+security---the first published architectural defense with formal guarantees on
+a realistic task set.
+Circuit Breakers~\cite{zou2024circuitbreakers} use representation engineering
+to interrupt the model internally as it begins to generate harmful outputs,
+providing robustness against powerful unseen attacks for both text-only and
+multimodal models.
+StruQ~\cite{chen2025struq} enforces structural query separation through
+reserved delimiter tokens and structured instruction tuning, reducing IPI ASR
+to below 2\% against optimization-free attacks.
+SecurityLingua~\cite{li2025securitylingua} provides a lightweight input
+defense via security-aware prompt compression, activating the target model's
+built-in guardrails with negligible latency overhead.
+
+A critical limitation shared by all these defenses is that they protect a
+\emph{single} layer and are evaluated in isolation. Nasr~et~al.\ demonstrate
+this definitively~\cite{nasr2025adaptive}: adaptive attackers bypass 12 recent
+defenses with greater than 90\% ASR by combining gradient descent, RL, and
+human-guided search. CAPS provides the missing analytical tool---by modeling
+each defense as an edge-pruning operation on the deployment graph, it computes
+the residual Compositional Attack Surface Score against an adaptive adversary
+who routes around defended edges, exposing residual risk that per-layer
+evaluation conceals.
+
+% -------------------------------------------------------
+
+\subsection{Graph-Based Security Modeling}
+
+The use of directed graphs to model multi-step attack chains has a long history
+in network security.
+Sheyner~et~al.\ introduced automated attack-graph generation via symbolic
+model checking~\cite{sheyner2002attackgraphs}, enabling analysis of minimal
+countermeasure sets in network topologies.
+Ammann~et~al.\ introduced the monotonicity assumption---an attacker never
+surrenders previously gained privileges---yielding polynomial-size
+representations of attack-dependency graphs~\cite{ammann2002scalable}.
+CAPS inherits both contributions: LLM deployment stacks are modeled as
+directed acyclic graphs under monotonicity, and CASS computation is linear in
+the number of edges.
+
+For the propagation component, Polonium~\cite{chau2011polonium} demonstrated
+scalable belief propagation over a billion-node file--machine bipartite graph
+for malware reputation inference, establishing the feasibility of
+message-passing-based risk aggregation at graph scale in security settings.
+In the machine learning for code security domain, Devign~\cite{zhou2019devign}
+showed that graph neural networks over compound code-property graphs can learn
+vulnerability patterns that elude linear classifiers, motivating the use of
+learned edge weights as a future extension of CAPS.
+
+To our knowledge, CAPS is the first framework to adapt attack-graph path
+scoring and belief propagation from classical network security to the layered
+LLM deployment setting, composing the per-layer ASR measurements, CVE-derived
+structural edges, and benchmark figures from prior work into a single scored,
+end-to-end risk model.
