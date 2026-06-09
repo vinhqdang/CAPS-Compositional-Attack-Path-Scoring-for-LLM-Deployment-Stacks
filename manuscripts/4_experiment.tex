@@ -45,17 +45,17 @@ The quantitative performance of the models is evaluated based on three primary m
 
 \subsection{Results and Discussion}
 
-We executed the CAPS evaluation engine alongside the baseline algorithms against our three deployment topologies. The empirical results, tracking the maximum critical path risk scores (scaled continuously from $0 - 100$), are presented in Table \ref{tab:results} and visually contrasted in Figure \ref{fig:baselines}.
+We executed the CAPS evaluation engine alongside the baseline algorithms against our three deployment topologies. The empirical results, tracking the maximum critical path risk scores (scaled continuously from $0 - 100$), are presented in Table \ref{tab:results} and visually contrasted in Figure \ref{fig:baselines}. Note that Baseline 2 (STRIDE-AI) provides qualitative categorical threat tiers rather than precise numerical scores, but is included in the table for a comprehensive comparative view.
 
 \begin{table*}[ht]
 \centering
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|}
 \hline
-\textbf{Architecture} & \textbf{Baseline 1 (MATRA)} & \textbf{Baseline 3 (ADTree No Decay)} & \textbf{CAPS (Proposed)} \\
+\textbf{Architecture} & \textbf{Baseline 1 (MATRA)} & \textbf{Baseline 2 (STRIDE-AI)} & \textbf{Baseline 3 (ADTree No Decay)} & \textbf{CAPS (Proposed)} \\
 \hline
-RAG Chatbot & 55.4 & 42.4 & \textbf{34.3} \\
-Autonomous Agent & 70.2 & 58.1 & \textbf{51.3} \\
-Model Router & 68.5 & 56.0 & \textbf{47.6} \\
+RAG Chatbot & 55.4 & High & 42.4 & \textbf{34.3} \\
+Autonomous Agent & 70.2 & Critical & 58.1 & \textbf{51.3} \\
+Model Router & 68.5 & Critical & 56.0 & \textbf{47.6} \\
 \hline
 \end{tabular}
 \caption{Comparison of Critical Attack Path Risk Scores across frameworks. Lower CAPS scores represent a more realistic appraisal of compounding exploit friction over multi-hop paths compared to independent component baselines.}
