@@ -29,8 +29,10 @@ This topology reflects a centralized AI gateway (API Router) that abstracts mult
 We benchmark the CAPS algorithm against four prevalent scoring methodologies drawn from recent (2025-2026) literature:
 
 \begin{itemize}
+\begin{revenv}
     \item \textbf{Baseline 1: MATRA: Modeling the Attack Surface of Agentic AI Systems (2026):} A recent framework \cite{vanhamme2026matra} evaluating agentic AI security by defining weakest-link risk and full attack surface exposure. We utilize its weakest-link metric to score the architecture.
     \item \textbf{Baseline 2: STRIDE-AI Threat Modeling (2026):} A qualitative framework \cite{cyrille2026strideai} extending STRIDE for generative AI, utilized here to represent standardized security assessment approaches that lack rigorous path probability attenuation.
+\end{revenv}
     \item \textbf{Baseline 3: Attack-Defense Trees (ADTree) with Additive CVSS (2026):} A recent structural framework \cite{nagaraja2026llmbasedsystemsbreaksystemlevel} that constructs attack paths but utilizes purely additive or multiplicative probability aggregation ($\alpha = 1.0$), failing to account for the exponential difficulty of chaining exploits across heterogeneous systems.
     \item \textbf{Baseline 4: Goal-Driven Likelihood $\times$ Impact Trees (2026):} A domain-specific attack tree model \cite{goaldriven2026} utilizing generic likelihood estimations rather than our granular "Effective Exploitability" derived from specific component mitigation modeling.
 \end{itemize}
@@ -45,8 +47,9 @@ The quantitative performance of the models is evaluated based on three primary m
 
 \subsection{Results and Discussion}
 
-We executed the CAPS evaluation engine alongside the baseline algorithms against our three deployment topologies. The empirical results, tracking the maximum critical path risk scores (scaled continuously from $0 - 100$), are presented in Table \ref{tab:results} and visually contrasted in Figure \ref{fig:baselines}. Note that Baseline 2 (STRIDE-AI) provides qualitative categorical threat tiers rather than precise numerical scores, but is included in the table for a comprehensive comparative view.
+We executed the CAPS evaluation engine alongside the baseline algorithms against our three deployment topologies. The empirical results, tracking the maximum critical path risk scores (scaled continuously from $0 - 100$), are presented in Table \ref{tab:results} and visually contrasted in Figure \ref{fig:baselines}. \rev{Note that Baseline 2 (STRIDE-AI) provides qualitative categorical threat tiers rather than precise numerical scores, but is included in the table for a comprehensive comparative view.}
 
+\begin{revenv}
 \begin{table*}[ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|}
@@ -61,6 +64,7 @@ Model Router & 68.5 & Critical & 56.0 & \textbf{47.6} \\
 \caption{Comparison of Critical Attack Path Risk Scores across frameworks. Lower CAPS scores represent a more realistic appraisal of compounding exploit friction over multi-hop paths compared to independent component baselines.}
 \label{tab:results}
 \end{table*}
+\end{revenv}
 
 \begin{figure*}[ht]
     \centering
@@ -70,12 +74,14 @@ Model Router & 68.5 & Critical & 56.0 & \textbf{47.6} \\
 \end{figure*}
 
 \subsubsection{Path Resolution Accuracy}
-Before examining the risk scores, we first evaluate the algorithmic precision of CAPS in identifying the true critical path among hundreds of possible permutations. Across all three topologies, CAPS correctly identified the verified red-team ground truth path with 100\% accuracy. In contrast, Baseline 1 (MATRA), when relying purely on its isolated weakest-link metric, frequently flagged isolated dead-end components (e.g., an unauthenticated internal logging server with a high vulnerability exposure but no outbound data flow) as the primary risk, demonstrating the severe limitation of non-topological scoring.
+Before examining the risk scores, we first evaluate the algorithmic precision of CAPS in identifying the true critical path among hundreds of possible permutations. Across all three topologies, CAPS correctly identified the verified red-team ground truth path with 100\% accuracy. \rev{In contrast, Baseline 1 (MATRA), when relying purely on its isolated weakest-link metric, frequently flagged isolated dead-end components (e.g., an unauthenticated internal logging server with a high vulnerability exposure but no outbound data flow) as the primary risk, demonstrating the severe limitation of non-topological scoring.}
 
+\begin{revenv}
 \subsubsection{Addressing Systemic Risk Overestimation} 
 As comprehensively demonstrated in Table \ref{tab:results} and Figure \ref{fig:baselines}, Baseline 1 (MATRA) consistently yields highly inflated risk scores across all topologies. In the Autonomous Agent scenario, Baseline 1 generated a critical score of 70.2. This pathological overestimation occurs because its independent weakest-link scoring isolates the most severe terminal vulnerability—such as arbitrary shell execution on the host OS—and calculates its risk in a vacuum. It entirely disregards the fact that an external attacker must first successfully compromise the repository, traverse the LangGraph agent orchestrator, and evade file writer constraints to even reach that bash execution component. 
 
 Baseline 1 effectively assumes an entry-point probability of $1.0$ for all deep-stack components. In an enterprise environment, this leads to an overestimation of functional risk, severe alert fatigue, and the highly inefficient allocation of security engineering resources toward deeply buried components that are already shielded by upstream orchestration boundaries.
+\end{revenv}
 
 \subsubsection{The Efficacy of Chaining Decay} 
 Baseline 3 represents a marked improvement over Baseline 1, as it is a modern attack-path approach that calculates the joint probability of chained exploits. However, without a structural chaining decay factor (effectively hardcoding $\alpha = 1.0$), it assumes seamless transitions between network components. 
