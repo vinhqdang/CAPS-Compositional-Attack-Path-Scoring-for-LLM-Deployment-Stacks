@@ -58,25 +58,25 @@ gradient access, achieving near-100\% attack success rate (ASR) on open-weight
 models with notable transfer to black-box APIs. Prompt Automatic Iterative
 Refinement (PAIR)~\cite{chao2023pair} demonstrated that semantic, black-box
 jailbreaks can succeed in approximately 20 queries---reducing attacker cost by
-up to 250$\times$ relative to GCG. AutoDAN-Turbo~\cite{liu2025autodan}
-extends black-box efficiency through lifelong strategy self-exploration,
-achieving 74.3\% higher average ASR than baselines and 88.5\% on
-GPT-4-1106-turbo; AutoDAN-Reasoning~\cite{liu2025autodanreasoning} further
-adds test-time scaling (Best-of-N, Beam Search), increasing ASR by up to 15.6
-percentage points against instruction-tuned models and 12.5 points against
-reasoning models.
+up to 250$\times$ relative to GCG. \rev{AutoDAN-Turbo~\cite{liu2025autodan}
+further extends this black-box efficiency through lifelong strategy self-exploration,
+achieving 74.3\% higher average ASR than baseline optimization methods and 88.5\% on
+GPT-4-1106-turbo by continually adapting its attack strategies.}
 
 Multi-turn escalation attacks represent a structurally distinct threat model.
-Crescendo~\cite{russinovich2025crescendo} exploits the tendency of LLMs to
+\rev{Crescendo~\cite{russinovich2025crescendo} exploits the tendency of LLMs to
 follow patterns and attend to recent context, escalating gradually from a
 benign opening over fewer than five turns to achieve near-100\% ASR on GPT-4,
-GPT-3.5, Gemini-Pro, and Llama-2-70B across high-risk task categories.
+GPT-3.5, Gemini-Pro, and Llama-2-70B across high-risk task categories.}
 Many-shot jailbreaking~\cite{anil2024manyshot} exploits extended context
 windows by prepending hundreds of faux harmful dialogues, with effectiveness
 growing as a power law in the number of in-context shots.
 
 A fundamentally new class of attacks emerged in 2025 targeting
-\emph{reasoning traces}. H-CoT~\cite{kuo2025hcot} injects mock
+\emph{reasoning traces}. \rev{AutoDAN-Reasoning~\cite{liu2025autodanreasoning} targets
+this specific capability by leveraging test-time scaling (Best-of-N, Beam Search),
+increasing ASR by up to 12.5 percentage points against reasoning models and 15.6 points
+against instruction-tuned models.} H-CoT~\cite{kuo2025hcot} injects mock
 chain-of-thought to hijack the safety reasoning mechanism of frontier LRMs,
 collapsing refusal rates on OpenAI o1/o3, DeepSeek-R1, and Gemini 2.0 Flash
 Thinking from approximately 98\% to near zero. SEAL~\cite{nguyen2025seal}
@@ -280,6 +280,8 @@ In the machine learning for code security domain, Devign~\cite{zhou2019devign}
 showed that graph neural networks over compound code-property graphs can learn
 vulnerability patterns that elude linear classifiers, motivating the use of
 learned edge weights as a future extension of CAPS.
+
+\rev{While these classical attack graph models provide a robust mathematical foundation, they are fundamentally insufficient for modern LLM ecosystems. Traditional attack graphs assume deterministic network state transitions (e.g., an open SSH port consistently allows a specific exploit). In contrast, LLM architectures rely on probabilistic, semantic transitions where attack success depends heavily on non-deterministic decoding, natural language ambiguities, and dynamic prompt injection. Traditional binary path analysis fails to capture this semantic stochasticity, necessitating the exponential chaining decay and Effective Exploitability formulations introduced in CAPS.}
 
 To our knowledge, CAPS is the first framework to adapt attack-graph path
 scoring and belief propagation from classical network security to the layered

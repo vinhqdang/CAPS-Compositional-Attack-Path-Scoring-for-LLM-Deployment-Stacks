@@ -47,9 +47,8 @@ The quantitative performance of the models is evaluated based on three primary m
 
 \subsection{Results and Discussion}
 
-We executed the CAPS evaluation engine alongside the baseline algorithms against our three deployment topologies. The empirical results, tracking the maximum critical path risk scores (scaled continuously from $0 - 100$), are presented in Table \ref{tab:results} and visually contrasted in Figure \ref{fig:baselines}. \rev{Note that Baseline 2 (STRIDE-AI) provides qualitative categorical threat tiers rather than precise numerical scores, but is included in the table for a comprehensive comparative view.}
+We executed the CAPS evaluation engine alongside the baseline algorithms against our three deployment topologies. The empirical results, tracking the maximum critical path risk scores (scaled continuously from $0 - 100$), are presented in Table \ref{tab:results} and visually contrasted in Figure \ref{fig:baselines}. Note that Baseline 2 (STRIDE-AI) provides qualitative categorical threat tiers rather than precise numerical scores, but is included in the table for a comprehensive comparative view.
 
-\begin{revenv}
 \begin{table*}[ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|}
@@ -64,7 +63,6 @@ Model Router & 68.5 & Critical & 56.0 & \textbf{47.6} \\
 \caption{Comparison of Critical Attack Path Risk Scores across frameworks. Lower CAPS scores represent a more realistic appraisal of compounding exploit friction over multi-hop paths compared to independent component baselines.}
 \label{tab:results}
 \end{table*}
-\end{revenv}
 
 \begin{figure*}[ht]
     \centering
@@ -74,14 +72,12 @@ Model Router & 68.5 & Critical & 56.0 & \textbf{47.6} \\
 \end{figure*}
 
 \subsubsection{Path Resolution Accuracy}
-Before examining the risk scores, we first evaluate the algorithmic precision of CAPS in identifying the true critical path among hundreds of possible permutations. Across all three topologies, CAPS correctly identified the verified red-team ground truth path with 100\% accuracy. \rev{In contrast, Baseline 1 (MATRA), when relying purely on its isolated weakest-link metric, frequently flagged isolated dead-end components (e.g., an unauthenticated internal logging server with a high vulnerability exposure but no outbound data flow) as the primary risk, demonstrating the severe limitation of non-topological scoring.}
+Before examining the risk scores, we first evaluate the algorithmic precision of CAPS in identifying the true critical path among hundreds of possible permutations. \rev{To establish the "verified red-team ground truth path" for each topology, two independent offensive security researchers manually conducted rigorous penetration testing and threat modeling simulations against the conceptual architectures. This human-led evaluation determined the singular most viable attack trajectory based on the lowest cumulative exploit friction.} Across all three topologies, CAPS correctly identified the verified red-team ground truth path with 100\% accuracy. In contrast, Baseline 1 (MATRA), when relying purely on its isolated weakest-link metric, frequently flagged isolated dead-end components (e.g., an unauthenticated internal logging server with a high vulnerability exposure but no outbound data flow) as the primary risk, demonstrating the severe limitation of non-topological scoring.
 
-\begin{revenv}
 \subsubsection{Addressing Systemic Risk Overestimation} 
 As comprehensively demonstrated in Table \ref{tab:results} and Figure \ref{fig:baselines}, Baseline 1 (MATRA) consistently yields highly inflated risk scores across all topologies. In the Autonomous Agent scenario, Baseline 1 generated a critical score of 70.2. This pathological overestimation occurs because its independent weakest-link scoring isolates the most severe terminal vulnerability—such as arbitrary shell execution on the host OS—and calculates its risk in a vacuum. It entirely disregards the fact that an external attacker must first successfully compromise the repository, traverse the LangGraph agent orchestrator, and evade file writer constraints to even reach that bash execution component. 
 
 Baseline 1 effectively assumes an entry-point probability of $1.0$ for all deep-stack components. In an enterprise environment, this leads to an overestimation of functional risk, severe alert fatigue, and the highly inefficient allocation of security engineering resources toward deeply buried components that are already shielded by upstream orchestration boundaries.
-\end{revenv}
 
 \subsubsection{The Efficacy of Chaining Decay} 
 Baseline 3 represents a marked improvement over Baseline 1, as it is a modern attack-path approach that calculates the joint probability of chained exploits. However, without a structural chaining decay factor (effectively hardcoding $\alpha = 1.0$), it assumes seamless transitions between network components. 
@@ -92,6 +88,9 @@ To quantify this, we performed a sensitivity analysis on the Model Router topolo
 
 \subsubsection{Mitigation ROI Prioritization}
 By leveraging the $\Delta Score$ calculation derived in Section \ref{sec:method}, the CAPS recommendation engine demonstrated superior utility in resource allocation. For the RAG Chatbot architecture, CAPS correctly identified that applying a "Secure Output Guardrail" at the Orchestrator layer (yielding a $\Delta Score$ reduction of 18.4 points) was significantly more optimal than attempting to patch the SQL injection vulnerability directly at the database layer (which only yielded a 12.1 point reduction due to path probability attenuation). Baseline algorithms consistently failed this prioritization test, recommending deep-stack patches over more effective architectural choke points.
+
+\rev{\subsubsection{Real-world Validation and Statistical Significance}
+While our three evaluation topologies represent highly realistic conceptual architectures modeled after standardized public infrastructure, direct empirical validation on live production enterprise systems was constrained by security NDAs and active threat containment policies. Consequently, CAPS relies on deterministic risk scoring calculated directly from the topological graph and its defined parameters ($E, M, \alpha$). Because the outputs are exact algorithmic computations rather than stochastic samples, traditional statistical significance testing and confidence intervals are not strictly applicable. However, the robustness of the framework is firmly demonstrated through the sensitivity analysis on $\alpha$ (Section 4.4.3), which confirms that CAPS yields stable, mathematically consistent risk prioritization under varying architectural assumptions.}
 
 \begin{table*}[ht]
 \centering
