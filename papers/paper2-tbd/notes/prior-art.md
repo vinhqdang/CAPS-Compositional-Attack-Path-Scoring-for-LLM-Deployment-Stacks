@@ -102,3 +102,71 @@ before committing.
 Run a systematic prior-art search (`/ars-lit-review` or the `deep-research` skill) over
 2025–2026 agentic-security venues **before** investing in a formulation. Six searches were
 enough to invalidate the proposal; they are not enough to validate a replacement.
+
+---
+
+# Systematic search round 1 — transformation-attrition direction
+
+**Run:** `wf_41999110-bfd`, 2026-08-05. 101 agents, 19 primary sources, 95 claims extracted.
+**Completed degraded:** 24 agents died on API 529s including the synthesis step, so **no
+verdict was produced**. Of 95 claims only 25 were verified: 7 confirmed, 10 killed,
+8 left unverified — and the unverified set contains the decisive ones. Re-run launched.
+
+## Proposition under test
+
+Per-edge injection survival $\sigma(T_e)$ indexed by transformation operator, replacing
+$\alpha^{k-1}$ in a compositional path score; plus the derived claim that inserting a lossy
+transformation is a security control trading against utility.
+
+## Confirmed (survived 3-vote adversarial verification)
+
+| Source | Finding | Effect |
+|---|---|---|
+| Agent-BOM [2605.06812](https://arxiv.org/abs/2605.06812) | Hierarchical attributed graph with semantic edges, but risk assessment is graph-query pattern matching against OWASP Agentic Top 10 — no probability, no numeric score, no per-edge weight. Edges typed by capability/state binding, **not** by transformation operator. Names cascading propagation as an unmet gap but answers with an auditing artifact. | **Supports** — architecture-level probabilistic calculus unoccupied |
+| [2606.18530](https://arxiv.org/abs/2606.18530) | Single-hop prompting-defense benchmark. No multi-hop model, no attack graph, no per-edge weighting, no compositional score. | **Supports** |
+| [2605.30686](https://arxiv.org/abs/2605.30686) | Measured depth decay (ASR 60% at depth 1 → 0% at depths 4–5) is attributed to model refusal and to the agent finishing its task before reaching the payload — i.e. position/scheduling, **not** semantic transformation. | **Supports** — mechanism distinct |
+| Kill-Chain Canaries [2603.28013](https://arxiv.org/pdf/2603.28013) (2-1) | Attributes stage-to-stage attenuation to the pipeline operation at that stage, explicitly identifying the Exposed→Persisted drop as *summarization-stage filtering*. | **THREATENS** — already links measured injection loss to a transformation operator |
+| [2605.08442](https://arxiv.org/html/2605.08442) (1-1, weak) | Per-stage survival: stored >97.5%, downstream execution 0–95%. Varies by model generation and defense placement, not by transformation operator. | Mixed |
+
+## Unverified — votes died on 529s. **These decide the question.**
+
+Extracted with quotes from primary sources but never adversarially checked. Treat as leads,
+not findings. Must be read manually.
+
+- **[2510.22963v4](https://arxiv.org/html/2510.22963v4) — the most serious threat.** Formalizes
+  **Adversarial Information Loss**, $AIL(x;R) := WCD(x;R) - BIL(x;R)$ (worst-case
+  post-compression distortion minus benign information loss) — the closest existing
+  formalization of "information destruction at a hop" as a security-relevant measurable
+  quantity. Argues a lossy compression stage is not security-neutral and shifts the security
+  boundary from the isolated model to the composed pipeline.
+- **Counter-evidence to the headline claim, same paper.** Across compression budgets
+  $R \in \{0.2,0.4,0.6,0.8\}$, adversarial success stays high (0.69–0.65) *precisely in the
+  regimes where benign utility is preserved* ($R \ge 0.6$). If this holds, "lossier hop
+  monotonically reduces injection propagation, costing only utility" is **empirically false** —
+  the tradeoff is not favourable. It also reports Critical Token Removal Rate (avg 0.76) and
+  explicitly *rejects* the payload-survival threat model this proposition is built on.
+- **Neural Exec [2403.03792](https://arxiv.org/pdf/2403.03792) (March 2024).** Names
+  "robustness to pre-processing" for indirect injection, and measures ~80% average payload
+  persistence through chunking + embedding + top-k retrieval at 500-char chunks — i.e. a
+  $\sigma(T_e)$-like quantity has existed for the chunk/re-embed/retrieve operator for two years.
+- [2605.08442] builds no probabilistic model from its rates and never examines memory
+  compression or re-embedding as attenuating operators.
+
+## Killed by verifiers (do not rely on these)
+
+Ten claims were refuted 0-3 or 1-2, including both the claim that paraphrase measurements
+(55–84% ASR reduction) constitute direct $\sigma$(paraphrase) prior art, and the claim that
+$\sigma$ cannot be operator-intrinsic because spotlighting varies by model (~50% on Claude
+Haiku vs 0% on Llama 3.1 8B). Refutation here means the verifiers rejected the claim *about
+the paper*; it does not establish the opposite.
+
+## Provisional read
+
+**PARTIALLY NOVEL at best.** The compositional architecture-level aggregation appears
+unoccupied, but the mechanism insight is partly taken (Kill-Chain Canaries, confirmed), the
+per-operator measurement is partly taken (Neural Exec, unverified), the information-loss
+formalization is partly taken (AIL, unverified), and the headline design claim has direct
+published counter-evidence (unverified). The defensible residue is narrow: the *path-level
+calculus and its algorithmics*, not the mechanism and not the measurement.
+
+**Do not commit until 2510.22963 and 2403.03792 have been read in full.**
