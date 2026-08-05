@@ -35,28 +35,56 @@ CAPS represents an LLM deployment stack as a directed graph $G = (V, E)$.
 
 ## 📦 Project Structure
 
+The repository holds a shared library plus one directory per paper, so that multiple
+papers can be written, submitted, and revised against the same codebase.
+
 ```
 CAPS-Compositional-Attack-Path-Scoring-for-LLM-Deployment-Stacks/
-├── caps/
+├── caps/                       # Shared library (used by every paper)
 │   ├── __init__.py
-│   ├── models.py       # Pydantic schema representations
-│   ├── engine.py       # NetworkX path calculations & mitigation simulation ROI
-│   ├── templates.py    # Preconfigured LLM stacks (RAG, Code Agent, Router)
-│   ├── report.py       # High-fidelity CSS grid HTML/CSS report compiler
-│   └── cli.py          # Premium console UI formatting utilizing Rich
+│   ├── models.py               # Pydantic schema representations
+│   ├── engine.py               # NetworkX path calculations & mitigation simulation ROI
+│   ├── templates.py            # Preconfigured LLM stacks (RAG, Code Agent, Router)
+│   ├── report.py               # High-fidelity CSS grid HTML/CSS report compiler
+│   └── cli.py                  # Premium console UI formatting utilizing Rich
+├── papers/                     # One self-contained directory per paper
+│   ├── README.md               # Layout convention and per-paper rules
+│   ├── paper1-caps-jdsis/      # ACCEPTED — CAPS v1 (manuscript #10609)
+│   │   ├── *.tex, ref.bib, BVP_JDSIS.cls, figures/
+│   │   └── reviews/r1/         # Response letter and submitted PDFs
+│   └── paper2-tbd/             # Scoping; direction not yet settled
+├── experiments/                # Paper-specific experiment code
+│   └── paper1/
+│       ├── eval_baselines.py   # Reproduces Table 2 scores
+│       └── generate_plots.py   # Reproduces Figures 3 and 4
 ├── tests/
-│   ├── test_engine.py  # Unit tests for paths, decay, and mathematics
-│   └── test_cli.py     # Integration tests for commands and exports
-├── pyproject.toml      # Build metadata and package configuration
-├── README.md           # Visual landing page and documentation
-└── plan.md             # Implementation blueprint
+│   ├── test_engine.py          # Unit tests for paths, decay, and mathematics
+│   └── test_cli.py             # Integration tests for commands and exports
+├── docs/
+│   ├── plan_paper1.md          # Original implementation blueprint
+│   └── sample_report.html      # Example exported HTML report
+├── pyproject.toml              # Build metadata and package configuration
+└── README.md                   # This file
 ```
+
+**Ground rule for contributors:** paper 1's results are published and must stay
+reproducible. New scoring semantics belong in a new module (e.g. `caps/engine_corr.py`),
+never as a mutation of `caps/engine.py`. Each paper owns its own `ref.bib` and `figures/`;
+never share them. See [papers/README.md](papers/README.md).
 
 ---
 
 ## 📝 Academic Manuscript
 
-The `manuscripts/` directory contains the LaTeX source code for the academic paper detailing the CAPS framework. It includes comprehensive evaluations across three topologies (RAG Chatbot, Autonomous Agent, and Model Router) and highlights the efficacy of the chaining decay factor $\alpha$ and Mitigation ROI prioritization. The `figures/` subdirectory contains generated architectural diagrams, including the `method_overview.png` and `rag_topology.png`.
+The `papers/` directory contains the LaTeX sources for the academic papers built on this
+codebase. [`papers/paper1-caps-jdsis/`](papers/paper1-caps-jdsis/) is the accepted paper
+detailing the CAPS framework, with evaluations across three topologies (RAG Chatbot,
+Autonomous Agent, and Model Router) and the analysis of the chaining decay factor $\alpha$
+and Mitigation ROI prioritization. Its `figures/` subdirectory contains the generated
+architectural diagrams, including `method_overview.png` and `rag_topology.png`.
+
+Each paper directory also records the gaps between its published claims and the current
+implementation — see the per-paper `README.md`.
 
 ---
 

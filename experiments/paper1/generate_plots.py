@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-# Create figures directory if it doesn't exist
-os.makedirs("manuscripts/figures", exist_ok=True)
+# Figures belong to paper 1; resolve the path relative to the repository root so
+# this script can be run from any working directory.
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+FIGURES_DIR = os.path.join(REPO_ROOT, "papers", "paper1-caps-jdsis", "figures")
+os.makedirs(FIGURES_DIR, exist_ok=True)
 
 # 1. Baseline Comparison Bar Chart
 labels = ['RAG Chatbot', 'Autonomous Agent', 'Model Router']
@@ -27,7 +30,7 @@ ax.legend()
 ax.grid(axis='y', linestyle='--', alpha=0.7)
 
 plt.tight_layout()
-plt.savefig("manuscripts/figures/baseline_comparison.pdf")
+plt.savefig(os.path.join(FIGURES_DIR, "baseline_comparison.pdf"))
 plt.close()
 
 # 2. Decay Effect Line Chart
@@ -50,5 +53,5 @@ ax.legend()
 ax.grid(linestyle='--', alpha=0.7)
 
 plt.tight_layout()
-plt.savefig("manuscripts/figures/decay_effect.pdf")
+plt.savefig(os.path.join(FIGURES_DIR, "decay_effect.pdf"))
 plt.close()

@@ -26,7 +26,7 @@ This topology reflects a centralized AI gateway (API Router) that abstracts mult
 \textbf{Key Threats:} The attacker exploits a routing bypass vulnerability in the API gateway to force sensitive requests into the unauthenticated GPT-4 instance, subsequently extracting proprietary system prompts and executing unauthorized treasury queries.
 
 \subsection{Baseline Scoring Methodologies}
-We benchmark the CAPS algorithm against four prevalent scoring methodologies drawn from recent (2025-2026) literature:
+We benchmark the CAPS algorithm against three prevalent scoring methodologies drawn from recent (2025-2026) literature:
 
 \begin{itemize}
 \begin{revenv}
@@ -34,7 +34,6 @@ We benchmark the CAPS algorithm against four prevalent scoring methodologies dra
     \item \textbf{Baseline 2: STRIDE-AI Threat Modeling (2026):} A qualitative framework \cite{cyrille2026strideai} extending STRIDE for generative AI, utilized here to represent standardized security assessment approaches that lack rigorous path probability attenuation.
 \end{revenv}
     \item \textbf{Baseline 3: Attack-Defense Trees (ADTree) with Additive CVSS (2026):} A recent structural framework \cite{nagaraja2026llmbasedsystemsbreaksystemlevel} that constructs attack paths but utilizes purely additive or multiplicative probability aggregation ($\alpha = 1.0$), failing to account for the exponential difficulty of chaining exploits across heterogeneous systems.
-    \item \textbf{Baseline 4: Goal-Driven Likelihood $\times$ Impact Trees (2026):} A domain-specific attack tree model \cite{goaldriven2026} utilizing generic likelihood estimations rather than our granular "Effective Exploitability" derived from specific component mitigation modeling.
 \end{itemize}
 
 \subsection{Evaluation Metrics}

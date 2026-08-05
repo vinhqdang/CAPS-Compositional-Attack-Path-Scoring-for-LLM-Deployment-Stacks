@@ -1,4 +1,12 @@
+import os
 import sys
+
+# Make the shared `caps` package importable when this script is run from anywhere,
+# without requiring an editable install.
+sys.path.insert(
+    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
+
 from caps.templates import get_rag_chatbot, get_autonomous_coding_agent, get_model_router
 from caps.engine import AnalysisEngine
 
@@ -12,7 +20,7 @@ def evaluate(name, stack):
     b1_max = 0
     for c in stack.components:
         for v in c.vulnerabilities:
-            score = v.exploitability * c.asset_value * 10 # Wait, model has `exploitability` not `base_exploitability`
+            score = v.exploitability * c.asset_value * 10
             if score > b1_max: b1_max = score
             
     # Baseline 3: ADTree Product without decay (alpha = 1.0)

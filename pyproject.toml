@@ -25,5 +25,11 @@ dev = [
     "pytest>=7.0",
 ]
 
+# Pin the package list explicitly: the repository root now holds several non-package
+# directories (papers/, experiments/, docs/) that setuptools auto-discovery would
+# otherwise trip over.
+[tool.setuptools]
+packages = ["caps"]
+
 [project.scripts]
 caps = "caps.cli:app"
