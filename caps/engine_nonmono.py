@@ -48,6 +48,13 @@ from caps.engine import AnalysisEngine
 from caps.models import Component, Connection, DeploymentStack, Mitigation
 
 
+# The schema caps vulnerability exploitability at 1.0 and component asset value at
+# 10.0, so the product E_g * I_t that drives an iatrogenic path is bounded above by 10.
+# This ceiling is what makes the placement bound below a hard guarantee rather than a
+# heuristic.
+MAX_EG_TIMES_I = 10.0
+
+
 class Control:
     """A security control modelled as a graph operator, not just an attenuator."""
 
@@ -135,6 +142,144 @@ def evaluate_control(stack: DeploymentStack, control: Control) -> Dict[str, floa
         "iatrogenic_gap": round(ace - nce, 3),
         "sign_inverted": ace > 0 > nce,
     }
+
+
+def induced_signature(control: Control) -> Tuple[set, set]:
+    """The component ids and (source, destination) edges this control introduces."""
+    nodes = {c.id for c in control.induced_components}
+    edges = {(c.source, c.destination) for c in control.induced_connections}
+    return nodes, edges
+
+
+def _uses_induced_surface(path: List[str], nodes: set, edges: set) -> bool:
+    if any(n in nodes for n in path):
+        return True
+    return any((a, b) in edges for a, b in zip(path, path[1:]))
+
+
+def iatrogenic_paths(stack: DeploymentStack, control: Control) -> List[Dict]:
+    """Scored attack paths that exist only because the control was deployed.
+
+    A path qualifies if it traverses an induced component or an induced edge. Paths
+    that existed before deployment cannot exceed the baseline maximum (attenuation
+    only ever lowers scores), so any path above baseline must appear here.
+    """
+    nodes, edges = induced_signature(control)
+    deployed = control.apply(stack)
+    engine = AnalysisEngine(deployed)
+
+    out = []
+    for info in engine.analyze_paths():
+        if _uses_induced_surface(info["path"], nodes, edges):
+            out.append(info)
+    return out
+
+
+def inversion_report(stack: DeploymentStack, control: Control) -> Dict:
+    """Full iatrogenic analysis of a control, including the generalised criterion.
+
+    The criterion in closed form. Let the highest-scoring iatrogenic path be
+    ``P = <v_1 ... v_k>`` with the induced node ``g`` at position ``i`` (so ``g`` sits
+    ``d = i`` hops from the entry point). Write ``R`` for the product of node
+    exploitabilities strictly before ``g``, and ``S`` for the product strictly after.
+    Then
+
+        score(P) = R * E_g * S * alpha^(k-1) * I_{v_k} * 10
+
+    and the control is net-harmful exactly when ``score(P) > baseline``, i.e.
+
+        E_g * I_{v_k} > baseline / (10 * alpha^(k-1) * R * S)
+
+    The entry-adjacent special case is ``d = 1``, ``R = 1`` (the entry node contributes
+    exploitability 1.0), ``S = 1`` and ``v_k = g``, which recovers
+    ``E_g * I_g > baseline / (alpha * 10)``.
+
+    **Placement bound.** Because ``E_g <= 1`` and ``I_t <= 10``, the left-hand side is
+    capped at 10. So inversion is *impossible* -- for any induced node, however
+    exploitable or valuable -- whenever
+
+        alpha^(k-1) * R * S  <=  baseline / 100
+
+    The reachability product decays multiplicatively with depth, so deep controls are
+    safe by construction and only shallow, easily-reached controls can be net-harmful.
+    ``inversion_feasible`` reports which side of this bound a placement falls on.
+    """
+    base = evaluate_control(stack, control)
+    baseline = base["baseline"]
+    alpha = stack.chaining_decay
+
+    paths = iatrogenic_paths(stack, control)
+    report = dict(base)
+    report["name"] = control.name
+    report["n_iatrogenic_paths"] = len(paths)
+
+    if not paths:
+        report["top_iatrogenic_score"] = 0.0
+        report["decomposition"] = None
+        report["threshold"] = None
+        return report
+
+    top = paths[0]
+    report["top_iatrogenic_score"] = top["score"]
+    report["top_iatrogenic_path"] = list(top["path"])
+
+    deployed = control.apply(stack)
+    engine = AnalysisEngine(deployed)
+    induced_nodes, _ = induced_signature(control)
+
+    per_node = [
+        engine._calculate_node_exploitability(deployed.get_component(n))[0]
+        for n in top["path"]
+    ]
+
+    idx = next(
+        (i for i, n in enumerate(top["path"]) if n in induced_nodes), None
+    )
+    if idx is None:
+        # The path uses an induced edge but no induced node; no g to isolate.
+        report["decomposition"] = None
+        report["threshold"] = None
+        return report
+
+    k = len(top["path"])
+    prefix = 1.0
+    for e in per_node[:idx]:
+        prefix *= e
+    suffix = 1.0
+    for e in per_node[idx + 1 :]:
+        suffix *= e
+
+    e_g = per_node[idx]
+    target_impact = top["target_impact"]
+    decay = alpha ** (k - 1)
+
+    denom = 10.0 * decay * prefix * suffix
+    report["decomposition"] = {
+        "depth_d": idx,
+        "path_len_k": k,
+        "prefix_R": round(prefix, 5),
+        "E_g": round(e_g, 5),
+        "suffix_S": round(suffix, 5),
+        "target_impact": target_impact,
+        "decay": round(decay, 5),
+        # Sanity check: the decomposition must reproduce the engine's own score.
+        "reconstructed_score": round(
+            prefix * e_g * suffix * decay * target_impact * 10.0, 3
+        ),
+    }
+    report["threshold"] = round(baseline / denom, 5) if denom > 0 else None
+    report["lhs_E_g_times_I"] = round(e_g * target_impact, 5)
+
+    # Placement bound. The schema caps exploitability at 1.0 and asset value at 10.0,
+    # so E_g * I_t <= MAX_EG_TIMES_I. If the threshold exceeds that ceiling, no choice
+    # of the induced node's own parameters can make this control net-harmful: the
+    # placement is safe by construction.
+    report["inversion_feasible"] = (
+        report["threshold"] is not None and MAX_EG_TIMES_I > report["threshold"]
+    )
+    report["reachability_product"] = round(decay * prefix * suffix, 6)
+    report["reachability_floor"] = round(baseline / MAX_EG_TIMES_I / 10.0, 6)
+    return report
 
 
 def rank_controls(

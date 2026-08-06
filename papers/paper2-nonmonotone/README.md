@@ -80,14 +80,61 @@ protects. In the sweep, inversion begins at asset value 7 with exploitability 0.
 value 8 with exploitability 0.75. A centralised guardrail fronting all enterprise models
 plausibly sits in that regime, but this is an argued claim, not a measured one.
 
+**Generalised criterion — all three topologies.** `experiments/paper2/criterion_all_topologies.py`
+deploys a matched pair of controls per topology: a dedicated attenuator, and an identical
+attenuation delivered by a shared LLM-based guardrail ($E_g = 0.85$, $I_g = 8.0$).
+
+| Topology | $\alpha$ | Baseline | ACE | NCE (shared) | Gap | Inverted |
+|---|---|---|---|---|---|---|
+| RAG Chatbot | 0.90 | 34.34 | +27.47 | **−26.86** | 54.33 | yes |
+| Autonomous Coding Agent | 0.95 | 51.30 | +41.04 | **−13.30** | 54.34 | yes |
+| Enterprise Model Router | 0.85 | 47.60 | +38.08 | **−10.20** | 48.28 | yes |
+
+3/3 invert at these parameters, and in every case the dedicated and shared controls report
+an **identical ACE** — an attenuation-only model cannot tell them apart.
+
+The general criterion decomposes the top iatrogenic path $P = \langle v_1 \dots v_k\rangle$
+with the induced node $g$ at position $d$:
+
+$$\text{score}(P) = R \cdot E_g \cdot S \cdot \alpha^{k-1} \cdot I_{v_k} \cdot 10
+\qquad\Longrightarrow\qquad
+E_g \cdot I_{v_k} > \frac{\text{baseline}}{10\,\alpha^{k-1} R\,S}$$
+
+where $R$ and $S$ are the products of node exploitabilities before and after $g$. The
+entry-adjacent case ($d{=}1$, $R{=}S{=}1$) recovers the earlier closed form. The
+decomposition is verified against the engine's own score in both the experiment and a test.
+
+**Placement bound (the strongest result).** Since the schema caps $E_g \le 1$ and
+$I \le 10$, the left-hand side cannot exceed 10. So inversion is **impossible** — for any
+induced node, however exploitable or valuable — whenever
+
+$$\alpha^{k-1} \cdot R \cdot S \;\le\; \frac{\text{baseline}}{100}$$
+
+The reachability product decays multiplicatively with depth, so this is a hard guarantee,
+not a heuristic. With an identical maximal induced node on the model router:
+
+| Placement | $d$ | Reachability | Threshold | $E_g I_t$ | Feasible | Inverted |
+|---|---|---|---|---|---|---|
+| entry-adjacent guardrail | 1 | 0.8500 | 5.60 | 6.80 | yes | **yes** |
+| deep output sanitiser | 3 | 0.0275 | 173.01 | 6.80 | **no** | no |
+
+**Design implication:** iatrogenic risk is a property of how *reachable* a control is, not
+of how well it attenuates. Perimeter guardrails are the dangerous ones; deep controls are
+safe by construction. This is a positive, actionable result rather than only a critique.
+
 **Honest caveats.**
 
 - The original prediction was that the *ranking* would reorder. It does not, because the
-  dedicated and shared guardrails **tie exactly** under v1. The tie is the more damning
+  dedicated and shared controls **tie exactly** under v1. The tie is the more damning
   finding — v1 cannot distinguish dedicated from shared infrastructure at all — but it is a
   different result from the one predicted.
-- Control C3 in the demo yields zero delta under both semantics because it targets a component
-  off the critical path. That is a demo defect, not a finding.
+- The three inversions all occur at $d{=}1$, $R{=}1$, so the headline table exercises only
+  the entry-adjacent case. The general decomposition is exercised separately by the
+  placement-bound section and by `test_deep_placement_is_provably_safe`.
+- The deep sanitiser also has $ACE = 0$ because it attenuates a component off the critical
+  path, so it is uninformative as a *benefit* comparison. Its value here is the threshold.
+- Control C3 in `nonmonotone_demo.py` likewise yields zero delta under both semantics for
+  the same reason. That is a demo defect, not a finding.
 - All parameters are illustrative. Nothing here is measured.
 
 ## Novelty status: transfer, not new mathematics
@@ -115,18 +162,21 @@ not clear a top venue on novelty.
 
 1. **Measure one $E_g$.** The whole argument turns on guardrails being highly exploitable. One
    real measurement against a deployed guardrail would convert the argued regime into an
-   observed one.
-2. **Generalise the inversion criterion** beyond entry-adjacent controls to arbitrary placement.
-3. **Characterise when greedy ROI is still safe** — the condition under which the objective
-   remains submodular despite induced surface.
-4. **Check the other two topologies.** Only `model-router` has been run.
+   observed one. This is the single highest-value remaining item.
+2. **Characterise when greedy ROI is still safe** — the condition under which the objective
+   remains submodular despite induced surface. The placement bound is a partial answer:
+   controls below the reachability floor are safe, so greedy is sound when restricted to them.
+3. ~~Generalise the inversion criterion~~ — done, with a verified decomposition.
+4. ~~Check the other two topologies~~ — done, 3/3 invert.
 
 ## Reproducing
 
 ```bash
-python experiments/paper2/nonmonotone_demo.py
-python -m pytest tests/test_engine_nonmono.py -q
+python experiments/paper2/nonmonotone_demo.py            # sweep + inversion criterion
+python experiments/paper2/criterion_all_topologies.py    # all 3 topologies + placement bound
+python -m pytest tests/test_engine_nonmono.py -q         # 9 tests
 ```
 
-7 tests cover monotonicity of classical controls, sign inversion, v1's blindness, absence of
-mutation of the caller's stack, ranking disagreement, and input validation.
+Tests cover monotonicity of classical controls, sign inversion, v1's blindness across
+configurations, absence of mutation of the caller's stack, ranking disagreement, exactness of
+the score decomposition, provable safety of deep placements, and input validation.

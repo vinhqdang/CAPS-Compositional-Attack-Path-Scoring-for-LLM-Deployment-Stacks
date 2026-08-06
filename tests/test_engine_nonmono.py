@@ -171,6 +171,96 @@ def test_ranking_disagreement_is_detectable():
     assert ranking_full[0]["name"] == "dedicated"
 
 
+def test_decomposition_reconstructs_the_engine_score():
+    """The R * E_g * S * alpha^(k-1) * I_t * 10 factorisation must be exact."""
+    from caps.engine_nonmono import inversion_report
+
+    stack = get_model_router()
+    control = Control(
+        name="g",
+        attenuations={"model_router": Mitigation(id="a", name="a", effectiveness=0.8)},
+        induced_components=[
+            Component(
+                id="G",
+                name="G",
+                type="orchestrator",
+                asset_value=8.0,
+                vulnerabilities=[
+                    Vulnerability(id="vG", name="vG", exploitability=0.85, impact=7.0)
+                ],
+            )
+        ],
+        induced_connections=[
+            Connection(source="partner_app", destination="G"),
+            Connection(source="G", destination="model_router"),
+        ],
+    )
+    r = inversion_report(stack, control)
+    d = r["decomposition"]
+    assert d["reconstructed_score"] == pytest.approx(r["top_iatrogenic_score"], abs=0.01)
+
+
+def test_deep_placement_is_provably_safe():
+    """Past a depth the threshold exceeds max E_g * I_t, so inversion is impossible."""
+    from caps.engine_nonmono import MAX_EG_TIMES_I, inversion_report
+
+    stack = get_model_router()
+
+    def at(connections, target_id, atten_id):
+        return Control(
+            name="c",
+            attenuations={atten_id: Mitigation(id="a", name="a", effectiveness=0.8)},
+            induced_components=[
+                Component(
+                    id="G",
+                    name="G",
+                    type="tool",
+                    asset_value=10.0,
+                    vulnerabilities=[
+                        Vulnerability(id="vG", name="vG", exploitability=1.0, impact=7.0)
+                    ],
+                )
+            ],
+            induced_connections=connections,
+        )
+
+    shallow = at(
+        [
+            Connection(source="partner_app", destination="G"),
+            Connection(source="G", destination="model_router"),
+        ],
+        "G",
+        "model_router",
+    )
+    deep = at(
+        [
+            Connection(source="confidential_gpt4", destination="G"),
+            Connection(source="G", destination="treasury_database"),
+        ],
+        "G",
+        "confidential_gpt4",
+    )
+
+    r_shallow = inversion_report(stack, shallow)
+    r_deep = inversion_report(stack, deep)
+
+    # Both use the maximal induced node the schema permits.
+    assert r_shallow["lhs_E_g_times_I"] == pytest.approx(MAX_EG_TIMES_I)
+
+    # Shallow: feasible and actually inverts.
+    assert r_shallow["inversion_feasible"] is True
+    assert r_shallow["sign_inverted"] is True
+
+    # Deep: infeasible even at the maximum, so it cannot invert.
+    assert r_deep["inversion_feasible"] is False
+    assert r_deep["sign_inverted"] is False
+    assert r_deep["threshold"] > MAX_EG_TIMES_I
+
+    # And the bound is exactly the reachability-floor comparison.
+    assert (r_deep["reachability_product"] > r_deep["reachability_floor"]) is False
+    assert (r_shallow["reachability_product"] > r_shallow["reachability_floor"]) is True
+
+
 def test_unknown_target_component_is_rejected():
     stack = _linear_stack()
     control = Control(
