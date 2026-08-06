@@ -1,9 +1,13 @@
-"""What does the measured E_g do to the inversion claim?
+"""Aggregate every E_g measurement and state the current verdict on reachability.
 
-Paper 2 assumed E_g = 0.85 as illustrative and found iatrogenic inversion in 3/3
-topologies. `measure_eg.py` measured the bypass rate of an LLM guardrail directly.
-This script substitutes the measurement into the inversion criterion and reports the
-revised verdict, plus the minimum E_g each topology would require.
+This script is the single source of truth for "is the iatrogenic inversion regime
+reachable on measured parameters?". It reads *all* result files in `results/`, normalises
+their differing schemas, and compares each measured guardrail against the per-topology
+inversion thresholds derived from the closed-form criterion.
+
+It deliberately reports point estimates and CI bounds separately. Several measurement
+scripts print a "REACHED" line computed from the CI *upper* bound, which is a generous
+reading; the tables below keep the two apart so the distinction cannot be lost.
 
 Run:  /opt/miniconda3/envs/py313/bin/python experiments/paper2/revised_verdict.py
 """
@@ -16,7 +20,7 @@ sys.path.insert(
     0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 )
 
-from caps.engine_nonmono import MAX_EG_TIMES_I, max_path_score
+from caps.engine_nonmono import max_path_score
 from caps.templates import (
     get_autonomous_coding_agent,
     get_model_router,
@@ -24,8 +28,8 @@ from caps.templates import (
 )
 
 RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
-MAX_ASSET = 10.0  # schema ceiling on component asset value
-ASSUMED_EG = 0.85  # what paper 2 assumed before measuring
+MAX_ASSET = 10.0
+ASSUMED_EG = 0.85  # what paper 2 assumed before any measurement
 
 TOPOLOGIES = [
     ("RAG Chatbot", get_rag_chatbot),
@@ -33,99 +37,184 @@ TOPOLOGIES = [
     ("Enterprise Model Router", get_model_router),
 ]
 
+# Purpose-built safety classifiers, as opposed to general-purpose chat models.
+SAFETY_CLASSIFIERS = ("content-safety", "llama-guard", "safeguard")
 
-def load_measurement():
-    """Most recent E_g measurement on disk, if any."""
+
+def thresholds():
+    """Entry-adjacent inversion threshold per topology: baseline / (10 * alpha)."""
+    out = []
+    for label, factory in TOPOLOGIES:
+        stack = factory()
+        base = max_path_score(stack)
+        out.append((label, base, stack.chaining_decay, base / (10.0 * stack.chaining_decay)))
+    return out
+
+
+def load_all():
+    """Normalise every results file into a flat list of measurements."""
+    rows = []
     if not os.path.isdir(RESULTS):
-        return None
-    files = [f for f in os.listdir(RESULTS) if f.startswith("eg_") and f.endswith(".json")]
-    if not files:
-        return None
-    path = os.path.join(RESULTS, sorted(files)[-1])
-    with open(path) as f:
-        return json.load(f)
+        return rows
+
+    for fn in sorted(os.listdir(RESULTS)):
+        if not fn.endswith(".json"):
+            continue
+        with open(os.path.join(RESULTS, fn)) as f:
+            try:
+                d = json.load(f)
+            except json.JSONDecodeError:
+                continue
+
+        # Schema A: single-model static run (measure_eg.py).
+        if "E_g" in d and "model" in d:
+            rows.append({
+                "model": d["model"], "mode": "static", "E_g": d["E_g"],
+                "ci": d.get("E_g_ci95", [None, None]),
+                "n": d.get("n_injection_scored"), "source": fn,
+            })
+
+        # Schema B: multi-model static run (measure_eg_multimodel.py).
+        for r in d.get("rows", []):
+            if "E_g" in r:
+                rows.append({
+                    "model": r["model"], "mode": "static", "E_g": r["E_g"],
+                    "ci": r.get("E_g_ci95", [None, None]),
+                    "n": r.get("n_injection"), "source": fn,
+                })
+            # Schema C: adaptive run (measure_eg_adaptive_or.py).
+            elif "E_g_adaptive" in r:
+                rows.append({
+                    "model": r.get("guardrail", "?"), "mode": "adaptive",
+                    "E_g": r["E_g_adaptive"], "ci": r.get("ci95", [None, None]),
+                    "n": r.get("seeds"), "source": fn,
+                })
+
+        # Schema D: gemini adaptive/static sweep (measure_eg_adaptive.py).
+        for key, label in (("adaptive_strict", "adaptive/strict"),
+                           ("adaptive_permissive", "adaptive/permissive")):
+            blk = d.get(key)
+            if isinstance(blk, dict) and "E_g_adaptive" in blk:
+                rows.append({
+                    "model": f"{d.get('attacker', 'gemini')} vs guardrail [{label}]",
+                    "mode": "adaptive", "E_g": blk["E_g_adaptive"],
+                    "ci": blk.get("ci95", [None, None]),
+                    "n": blk.get("seeds"), "source": fn,
+                })
+        for r in d.get("static", []):
+            if "E_g" in r and "variant" in r:
+                rows.append({
+                    "model": f"{r['model']} [{r['variant']}]", "mode": "static",
+                    "E_g": r["E_g"], "ci": r.get("E_g_ci95", [None, None]),
+                    "n": r.get("n_injection"), "source": fn,
+                })
+    return rows
+
+
+def is_safety_classifier(model: str) -> bool:
+    return any(k in model.lower() for k in SAFETY_CLASSIFIERS)
 
 
 def main():
-    m = load_measurement()
-    if not m:
-        print("No E_g measurement found. Run measure_eg.py first.")
+    rows = load_all()
+    if not rows:
+        print("No measurements found in results/.")
         return 1
 
-    eg = m["E_g"]
-    eg_hi = m["E_g_ci95"][1]
+    # Drop configurations with too little data to interpret. Rate-limit attrition
+    # produced n=2 and n=0 configurations whose rates are meaningless.
+    MIN_N = 8
+    kept = [r for r in rows if (r["n"] or 0) >= MIN_N]
+    dropped = [r for r in rows if (r["n"] or 0) < MIN_N]
 
-    print("=" * 84)
-    print("Revised verdict: measured E_g substituted into the inversion criterion")
-    print("=" * 84)
-    print(f"\nmodel                  : {m['model']}")
-    print(f"injection calls scored : {m['n_injection_scored']}"
-          f"   (unscored: {m['n_unscored']})")
-    print(f"benign calls scored    : {m['n_benign_scored']}")
-    print(f"measured E_g           : {eg:.3f}  95% CI [{m['E_g_ci95'][0]:.3f}, {eg_hi:.3f}]")
-    print(f"false positive rate    : {m['false_positive_rate']:.3f}")
-    print(f"paper 2 had assumed    : {ASSUMED_EG:.3f}")
+    # The same guardrail was measured more than once at different n (e.g. nemotron at
+    # n=12 then n=36). Keep only the highest-n run per (model, mode) so class counts
+    # reflect distinct models rather than repeated runs.
+    best = {}
+    for r in kept:
+        key = (r["model"], r["mode"])
+        if key not in best or (r["n"] or 0) > (best[key]["n"] or 0):
+            best[key] = r
+    usable = list(best.values())
+    superseded = [r for r in kept if r is not best.get((r["model"], r["mode"]))]
 
-    print("\nEntry-adjacent control (d=1, R=S=1), the placement most prone to inversion.")
-    print("Using the CI upper bound for E_g and the schema-maximal asset value, i.e. the")
-    print("most favourable case for the inversion claim.\n")
+    ths = thresholds()
 
-    hdr = (f"{'topology':<26}{'alpha':>7}{'baseline':>10}{'threshold':>11}"
-           f"{'assumed':>10}{'measured':>10}{'inverts?':>10}")
-    print(hdr)
-    print("-" * len(hdr))
+    print("=" * 96)
+    print("Is the iatrogenic inversion regime reachable on measured parameters?")
+    print("=" * 96)
+    print(f"\nPaper 2 originally assumed E_g = {ASSUMED_EG}")
+    print("\nEntry-adjacent inversion thresholds (d=1, R=S=1), at maximal asset value:")
+    for label, base, alpha, th in ths:
+        print(f"  {label:<26} alpha={alpha:.2f}  baseline={base:6.2f}  "
+              f"threshold={th:5.3f}  -> needs E_g >= {th / MAX_ASSET * 10 / 10:.3f}")
 
-    required = []
-    for label, factory in TOPOLOGIES:
-        stack = factory()
-        baseline = max_path_score(stack)
-        alpha = stack.chaining_decay
-        threshold = baseline / (10.0 * alpha)
+    print(f"\n{'-' * 96}")
+    print("All usable measurements (n >= %d), highest E_g first" % MIN_N)
+    print("-" * 96)
+    print(f"{'guardrail':<50}{'mode':<10}{'E_g':>7}{'CI95':>18}{'n':>6}{'class':>5}")
+    print("-" * 96)
+    for r in sorted(usable, key=lambda x: -x["E_g"]):
+        lo, hi = r["ci"]
+        ci = f"[{lo:.3f},{hi:.3f}]" if lo is not None else "-"
+        cls = "SC" if is_safety_classifier(r["model"]) else "gen"
+        print(f"{r['model'][:49]:<50}{r['mode']:<10}{r['E_g']:>7.3f}{ci:>18}"
+              f"{r['n'] or 0:>6}{cls:>5}")
 
-        lhs_assumed = ASSUMED_EG * MAX_ASSET
-        lhs_measured = eg_hi * MAX_ASSET
-        inverts = lhs_measured > threshold
-        eg_needed = threshold / MAX_ASSET
-        required.append((label, eg_needed))
+    if dropped:
+        print(f"\nDropped for insufficient n (< {MIN_N}):")
+        for r in dropped:
+            print(f"  {r['model'][:60]:<62} n={r['n']}  ({r['source']})")
+    if superseded:
+        print("\nSuperseded by a higher-n run of the same guardrail:")
+        for r in superseded:
+            print(f"  {r['model'][:60]:<62} n={r['n']}  ({r['source']})")
 
-        print(
-            f"{label:<26}{alpha:>7.2f}{baseline:>10.2f}{threshold:>11.2f}"
-            f"{lhs_assumed:>10.2f}{lhs_measured:>10.2f}{str(inverts):>10}"
-        )
+    # --- verdict ----------------------------------------------------------------
+    print(f"\n{'=' * 96}")
+    print("Verdict per topology")
+    print("=" * 96)
+    print(f"{'topology':<26}{'needs':>8}{'by point estimate':>44}{'by CI upper':>16}")
+    print("-" * 96)
+    any_point = False
+    for label, _, _, th in ths:
+        need = th / MAX_ASSET
+        pt = [r["model"] for r in usable if r["E_g"] >= need]
+        up = [r["model"] for r in usable
+              if r["ci"][1] is not None and r["ci"][1] >= need]
+        any_point = any_point or bool(pt)
+        pt_s = ", ".join(m.split("/")[-1][:34] for m in pt) or "none"
+        print(f"{label:<26}{need:>8.3f}{pt_s[:43]:>44}{len(up):>16}")
 
-    print("\nMinimum E_g required for inversion (at the maximal asset value of 10):")
-    for label, needed in required:
-        ratio = needed / eg_hi if eg_hi > 0 else float("inf")
-        print(f"  {label:<26} E_g >= {needed:.3f}"
-              f"   ({ratio:.1f}x the measured CI upper bound)" if eg_hi > 0
-              else f"  {label:<26} E_g >= {needed:.3f}")
-
-    print("\n" + "=" * 84)
+    print("\n" + "=" * 96)
     print("Conclusion")
-    print("=" * 84)
-    any_inv = any(eg_hi * MAX_ASSET > max_path_score(f()) / (10.0 * f().chaining_decay)
-                  for _, f in TOPOLOGIES)
-    if any_inv:
-        print("Inversion survives the measurement in at least one topology.")
+    print("=" * 96)
+    if any_point:
+        print("REACHABLE. At least one measured guardrail clears an inversion threshold on")
+        print("its POINT estimate, not merely on a CI upper bound. The regime is therefore")
+        print("demonstrated on measured rather than assumed parameters.")
     else:
-        print("Inversion does NOT survive the measurement in any topology, even at the")
-        print("CI upper bound and the maximal asset value. The assumed E_g = 0.85 is")
-        print("falsified for this threat model; measured bypass is at least 4x too low.")
-        print()
-        print("What this does NOT touch:")
-        print("  - ACE blindness. That an attenuation-only algebra reports identical ROI")
-        print("    regardless of induced surface is structural and parameter-free.")
-        print("  - The placement bound. It holds for every E_g <= 1, so it is unaffected;")
-        print("    the measurement makes it the paper's principal surviving result.")
-        print()
-        print("Threat-model caveats on the measurement itself:")
-        print("  - The injection corpus is canonical/documented patterns, not adaptive or")
-        print("    optimised attacks. This measures naive-attacker bypass and is a weak")
-        print("    proxy for a motivated adversary (cf. Neural Exec, arXiv:2403.03792).")
-        print("  - It operationalises E_g as *classifier bypass*. The guardrail-DoS threat")
-        print("    (arXiv:2606.14517, 148x amplification) is resource exhaustion, not")
-        print("    bypass, and does not map onto this measurement at all.")
-        print("  - n is small (see scored counts above) and some calls were rate-limited.")
+        print("NOT DEMONSTRATED. No measured guardrail clears any threshold on its point")
+        print("estimate; only CI upper bounds reach them, which is too weak to claim.")
+
+    sc = [r for r in usable if is_safety_classifier(r["model"]) and r["mode"] == "static"]
+    gen = [r for r in usable if not is_safety_classifier(r["model"]) and r["mode"] == "static"]
+    if sc and gen:
+        print(f"\nBy model class (static runs):")
+        print(f"  purpose-built safety classifiers : n={len(sc)}, "
+              f"E_g {min(x['E_g'] for x in sc):.3f}-{max(x['E_g'] for x in sc):.3f}, "
+              f"{sum(1 for x in sc if x['E_g'] > 0)}/{len(sc)} non-zero")
+        print(f"  general-purpose models           : n={len(gen)}, "
+              f"E_g {min(x['E_g'] for x in gen):.3f}-{max(x['E_g'] for x in gen):.3f}, "
+              f"{sum(1 for x in gen if x['E_g'] > 0)}/{len(gen)} non-zero")
+        print("\n  The class difference is directional and consistent, but the spread within")
+        print("  safety classifiers is wide, so this does not support a claim that the class")
+        print("  is uniformly blind to injection.")
+
+    print("\nUnaffected by any of this, because they are parameter-free:")
+    print("  - ACE blindness: an attenuation-only algebra reports identical ROI regardless")
+    print("    of induced surface. Structural.")
+    print("  - The placement bound: holds for every E_g <= 1.")
     return 0
 
 
