@@ -198,6 +198,42 @@ bounded by placement; and for at least one current guardrail under naive attack,
 not reached. That is a narrower and more defensible paper than the one drafted before
 measuring — and the negative result is worth reporting.
 
+
+## Caveat 2 resolved — the availability gap, and why it rescues the argument
+
+`caps/engine_multidim.py` attaches a per-dimension impact vector (C, I, A) to components
+without touching `caps/models.py`, so paper 1 stays reproducible. With no overrides it
+reproduces v1 exactly on every dimension (asserted in `test_uniform_impacts_reproduce_v1_exactly`).
+
+Scoring one shared reasoning guardrail — a **low-confidentiality, high-availability** asset
+(C=3.0, I=4.0, A=9.5) whose vulnerability is resource exhaustion (E=0.80), per
+arXiv:2606.14517 — gives (`experiments/paper2/availability_gap.py`):
+
+| Model | Verdict |
+|---|---|
+| Scalar (CAPS v1) | ACE +38.08, **NCE +41.13 → "BENEFICIAL"** |
+
+| Dimension | Before | After | NCE | Verdict |
+|---|---|---|---|---|
+| C | 47.60 | 6.47 | **+41.13** | beneficial |
+| I | 47.60 | 6.47 | **+41.13** | beneficial |
+| A | 47.60 | 64.60 | **−17.00** | **HARMFUL** |
+
+**Dimension-crossing iatrogenesis.** The same control genuinely reduces confidentiality and
+integrity risk while genuinely increasing availability risk by 17 points. CAPS v1 reports
+"beneficial" with confidence, because a scalar score sums quantities that are not
+commensurable. The guardrail-DoS threat is not *mis-scored* by v1 — it is **unrepresentable**.
+
+**Why this matters more than the original framing.** The measured $E_g \approx 0$ falsified
+high *bypass* rates. But resource exhaustion is not bypass — it is a far easier attack, and
+arXiv:2606.14517's 148× amplification is direct evidence that guardrail exhaustion succeeds.
+So the iatrogenic argument survives the falsification **on the availability axis**, which is
+where it should have been located from the start. The confidentiality-path framing was the
+wrong home for it.
+
+This is a limitation of the *impact model*, distinct from the iatrogenic attack-surface
+argument, and needs naming separately in the paper.
+
 ## Novelty status: transfer, not new mathematics
 
 Four rounds of prior-art search (see [`notes/prior-art.md`](notes/prior-art.md)) found:
