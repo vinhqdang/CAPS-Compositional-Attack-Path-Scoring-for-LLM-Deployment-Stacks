@@ -170,3 +170,74 @@ published counter-evidence (unverified). The defensible residue is narrow: the *
 calculus and its algorithmics*, not the mechanism and not the measurement.
 
 **Do not commit until 2510.22963 and 2403.03792 have been read in full.**
+
+### Correction after reading both abstracts directly (2026-08-05)
+
+Both are **attacker-side** and neither builds a defender-side path calculus:
+
+- [2510.22963](https://arxiv.org/abs/2510.22963) is *"When Compression Becomes an Attack
+  Surface: Black-Box Attacks on Prompt-Compressed LLM Agents"* (Liu, Zhang, Xie, She; Oct 2025,
+  rev. Jun 2026). AIL is real — "the excess downstream distortion caused by adversarially
+  steering a lossy compressor beyond benign compression alone" — but it is a single-module
+  attacker-side quantity. Confirmed absent: per-hop/per-edge survival modeling, attack graph,
+  path-level risk score. Reported ASR 0.71 avg vs 0.21 baseline. The claimed counter-evidence
+  numbers (0.69–0.65 at R>=0.6) are **not** in the abstract and remain unverified.
+- [2403.03792](https://arxiv.org/abs/2403.03792) Neural Exec (Pasquini, Strohmeier, Troncoso;
+  Mar 2024) confirms triggers "persist through multi-stage preprocessing pipelines, such as
+  RAG," framed explicitly as attacker-side trigger design. The ~80% / 500-char figures are not
+  in the abstract.
+
+Earlier characterization of 2510.22963 as a direction-killer was wrong; it is adjacent.
+
+---
+
+# Systematic search round 2 — measurement-allocation direction
+
+**Date:** 2026-08-05. Direct searches (the 27-agent fan-out failed twice on API 529s; the
+resume returned 0 sources / 0 claims and is not evidence of anything).
+
+## Proposition under test
+
+Reframe from *scoring risk* to *deciding what to measure*: given a red-team budget, which
+edges/nodes should be measured to correctly identify the true critical path? Formulated as
+best-arm identification over attack paths with overlapping (parameter-sharing) arms.
+
+## Verdict: substantially occupied
+
+The motivating question is directly addressed by existing attack-graph sensitivity analysis:
+a sensitivity test over attack graphs is already used *both* as remediation for high
+uncertainty in node probability estimates *and* as prioritization of vulnerabilities by
+importance to goal nodes — i.e. "which uncertain parameter should I refine" is answered.
+
+| Area | Prior art |
+|---|---|
+| Sensitivity analysis / uncertainty over Bayesian attack graphs | [2103.10212](https://arxiv.org/pdf/2103.10212), [1510.02427](https://arxiv.org/pdf/1510.02427) |
+| Optimal monitoring/detection resource allocation on Bayesian attack graphs | [Springer Cybersecurity 2023](https://link.springer.com/article/10.1186/s42400-023-00155-y), *Optimal Detection for BAGs under Uncertainty in Monitoring and Reimaging* |
+| Budget-constrained mitigation choice under a Bayesian model | Żebrowski et al., *Risk Analysis* 2022, [10.1111/risa.13900](https://onlinelibrary.wiley.com/doi/full/10.1111/risa.13900) |
+| Decoy/deception resource allocation on probabilistic attack graphs | [2301.01336](https://arxiv.org/pdf/2301.01336) |
+| Best-arm identification under budget / Pareto set / risk-averse | [2602.24146](https://arxiv.org/pdf/2602.24146), [2311.03992](https://arxiv.org/pdf/2311.03992), [2506.22253](https://arxiv.org/html/2506.22253v2) |
+| Monte Carlo propagation of aleatory + epistemic uncertainty over attack paths | [ScienceDirect S0951832025004569](https://www.sciencedirect.com/science/article/abs/pii/S0951832025004569) |
+| Dynamic risk assessment for offensive LLM agents | [2505.18384](https://arxiv.org/pdf/2505.18384) |
+
+The specific *best-arm-identification-with-overlapping-path-arms* formulation was not found
+verbatim, but the question it answers is already served by cheaper established technique. That
+is a weak basis for a novelty claim.
+
+## Meta-conclusion (the important finding)
+
+Three independently generated directions have now been checked and all three came back
+occupied: correlated shared-exploit modeling, per-edge transformation attrition, and
+measurement allocation. The quantitative attack-graph risk literature runs continuously from
+Sheyner (2002) to mid-2026 and has systematically covered scoring, correlation, hardening,
+monitoring allocation, sensitivity, uncertainty propagation, deception, Bayesian inference,
+and bandit methods.
+
+**Generating novelty by finding a gap adjacent to CAPS is structurally unpromising** — CAPS
+sits in the middle of a mature field, so local variations land on existing work by
+construction.
+
+What repeatedly came back *thin* across all three rounds is the **empirical layer**: for
+LLM/agentic stacks specifically, only [2603.28013](https://arxiv.org/pdf/2603.28013) and
+[2605.30686](https://arxiv.org/abs/2605.30686) do real multi-hop propagation measurement, both
+narrow. In a saturated theory space, novelty conventionally comes from a measured phenomenon
+that existing models fail to predict — not from another formalism.
