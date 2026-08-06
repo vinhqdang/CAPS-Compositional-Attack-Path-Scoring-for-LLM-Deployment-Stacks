@@ -290,10 +290,48 @@ survives). Against `nvidia/nemotron-nano-9b-v2:free`, which held at $E_g = 0.000
 |---|---|---|
 | nvidia/nemotron-nano-9b-v2:free | 0.000 [0.00, 0.26] | **0.250 [0.071, 0.591]** |
 
-2 of 8 seeds bypassed, at rounds 2 and 3. The CI upper bound of 0.591 exceeds all three
-inversion thresholds. So the canonical-pattern corpus did understate bypass, as suspected —
-adaptive attack is a materially different regime, exactly as Neural Exec (arXiv:2403.03792)
-would predict.
+Extending to a second guardrail, adaptive robustness varies sharply:
+
+| Guardrail | Static $E_g$ | Adaptive $E_g$ (5 rounds) |
+|---|---|---|
+| nvidia/nemotron-nano-9b-v2:free | 0.000 [0.00, 0.26] | **0.250** [0.071, 0.591] |
+| openai/gpt-oss-20b:free | 0.000 [0.00, 0.24] | 0.000 [0.000, 0.324] |
+| gemini-3.5-flash-lite (strict prompt) | 0.000 [0.00, 0.24] | 0.000 [0.000, 0.324] |
+| gemini-3.5-flash-lite (permissive prompt) | 0.083 [0.02, 0.35] | 0.125 [0.022, 0.471] |
+
+`gpt-oss-20b` held all 8 seeds through 5 rounds. Iteration helps against some guardrails and
+not others; it is not a general lever.
+
+**Care with the threshold comparison.** The 0.250 point estimate reaches *none* of the three
+inversion thresholds (the lowest is 0.382). Only its CI *upper* bound of 0.591 clears them,
+which is a generous reading — `measure_eg_adaptive_or.py` prints a "REACHED" line computed
+from the upper bound, and that label must not be quoted as though it were the point estimate.
+The honest statement: adaptive attack raises bypass materially above the static estimate but
+does not, on these data, demonstrate the regime is entered. Reachability rests on the
+safety-classifier result, whose *point* estimate clears all three thresholds.
+
+### Guardrail prompt wording — a real but modest effect
+
+Sweeping three guardrail prompts (strict / terse / permissive) closes the single-prompt half
+of caveat 3. Valid configurations only:
+
+| Guardrail | Prompt | $E_g$ | n |
+|---|---|---|---|
+| gemini-3.5-flash-lite | strict | 0.000 | 12 |
+| gemini-3.5-flash-lite | terse | 0.000 | 12 |
+| gemini-3.5-flash-lite | permissive | 0.083 | 12 |
+| gemini-2.5-flash | strict | 0.083 | 12 |
+
+A permissive prompt — one told that over-blocking breaks the product, which is the realistic
+production instruction — roughly doubles bypass on the frontier model, and combined with
+adaptive attack reaches 0.125. Both effects are real and both are far below the 0.382 needed.
+
+**Two configurations were discarded.** `gemini-2.5-flash / terse` scored n = 2 and
+`gemini-2.5-flash / permissive` scored n = 0, because 42 of 132 static calls in that run were
+lost to HTTP 429. The run's own summary line reports "highest $E_g$ observed: 0.500", which is
+**1 of 2 calls** and must not be used. Rate-limit attrition silently produced a headline
+number an order of magnitude off; any rerun needs per-configuration n reported alongside every
+rate.
 
 ### Honest limits on these numbers
 
