@@ -137,6 +137,67 @@ safe by construction. This is a positive, actionable result rather than only a c
   the same reason. That is a demo defect, not a finding.
 - All parameters are illustrative. Nothing here is measured.
 
+
+## MEASURED $E_g$ — and it falsifies the inversion claim
+
+`experiments/paper2/measure_eg.py` measures the guardrail bypass rate directly, using
+`gemini-3.5-flash-lite` as an LLM guardrail (ALLOW/BLOCK on untrusted content, temperature 0,
+3 trials per case). 12 documented injection structures with benign canary payloads; 10 benign
+controls that superficially resemble injection.
+
+| Quantity | Value | 95% CI (Wilson) |
+|---|---|---|
+| **Measured $E_g$ (bypass rate)** | **0.000** | [0.000, 0.099] |
+| False positive rate (benign blocked) | 0.000 | [0.000, 0.125] |
+| Paper 2 had *assumed* | 0.85 | — |
+
+35 injection calls scored, 27 benign, 4 lost to HTTP 429. **The guardrail blocked every
+injection and allowed every benign input.**
+
+Substituting the measurement into the criterion (`revised_verdict.py`), using the CI *upper*
+bound and the maximal asset value — the case most favourable to the claim:
+
+| Topology | Threshold | Assumed $E_g I_g$ | Measured $E_g I_g$ | Inverts? | Min $E_g$ needed |
+|---|---|---|---|---|---|
+| RAG Chatbot | 3.82 | 8.50 | 0.99 | **no** | 0.382 (3.9× measured) |
+| Autonomous Coding Agent | 5.40 | 8.50 | 0.99 | **no** | 0.540 (5.5× measured) |
+| Enterprise Model Router | 5.60 | 8.50 | 0.99 | **no** | 0.560 (5.7× measured) |
+
+**Iatrogenic inversion does not occur in any topology at measured parameters.** The earlier
+3/3 inversion result was an artefact of the assumed $E_g = 0.85$. Bypass would need to be
+4–6× higher than measured.
+
+### What survives
+
+- **ACE blindness.** That an attenuation-only algebra reports identical ROI regardless of
+  induced surface is a structural property of the algebra, independent of every parameter.
+  Unaffected.
+- **The placement bound.** It holds for all $E_g \le 1$, so the measurement cannot touch it.
+  This is now the paper's principal result.
+- **The iatrogenic gap** remains real but is much smaller than reported at $E_g = 0.85$.
+
+### Threat-model caveats on the measurement
+
+These limit how far the falsification generalises, and must be stated in the paper:
+
+1. The corpus is **canonical, documented** injection patterns — almost certainly in the
+   guardrail's training data. This measures *naive-attacker* bypass and is a weak proxy for a
+   motivated adversary using optimised triggers (cf. Neural Exec, arXiv:2403.03792, which
+   reports ~80% persistence through preprocessing).
+2. It operationalises $E_g$ as **classifier bypass**. The guardrail-DoS threat
+   (arXiv:2606.14517, 148× amplification) is *resource exhaustion*, not bypass, and does not
+   map onto this measurement at all. CAPS scores confidentiality/impact paths, so an
+   availability attack has no natural home in the model — arguably a separate limitation.
+3. Small $n$, single model, single guardrail prompt. No claim of generality.
+
+### Honest status
+
+The paper can no longer claim that real deployments sit in the inversion regime. It can claim:
+the algebra is structurally blind to induced surface; inversion is possible in principle and
+bounded by placement; and for at least one current guardrail under naive attack, the regime is
+not reached. That is a narrower and more defensible paper than the one drafted before
+measuring — and the negative result is worth reporting.
+
 ## Novelty status: transfer, not new mathematics
 
 Four rounds of prior-art search (see [`notes/prior-art.md`](notes/prior-art.md)) found:
@@ -160,9 +221,10 @@ not clear a top venue on novelty.
 
 ## What would strengthen it
 
-1. **Measure one $E_g$.** The whole argument turns on guardrails being highly exploitable. One
-   real measurement against a deployed guardrail would convert the argued regime into an
-   observed one. This is the single highest-value remaining item.
+1. ~~Measure one $E_g$~~ — done, and it falsified the inversion regime. See above.
+   The remaining measurement gap is an **adaptive** attacker: optimised triggers rather than
+   canonical patterns. That is the measurement that would decide whether the regime is ever
+   reached in practice.
 2. **Characterise when greedy ROI is still safe** — the condition under which the objective
    remains submodular despite induced surface. The placement bound is a partial answer:
    controls below the reachability floor are safe, so greedy is sound when restricted to them.

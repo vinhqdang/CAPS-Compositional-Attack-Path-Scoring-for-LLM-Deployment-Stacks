@@ -64,6 +64,7 @@ class Control:
         attenuations: Optional[Dict[str, Mitigation]] = None,
         induced_components: Optional[List[Component]] = None,
         induced_connections: Optional[List[Connection]] = None,
+        removed_connections: Optional[List[Tuple[str, str]]] = None,
         description: str = "",
     ):
         # component_id -> Mitigation applied to it
@@ -71,6 +72,9 @@ class Control:
         self.attenuations = attenuations or {}
         self.induced_components = induced_components or []
         self.induced_connections = induced_connections or []
+        # (source, destination) edges the control displaces. An inline control removes
+        # the direct edge it interposes on, rather than merely adding a parallel route.
+        self.removed_connections = removed_connections or []
         self.description = description
 
     @property
@@ -93,6 +97,12 @@ class Control:
             if comp.id in existing:
                 raise ValueError(f"control '{self.name}' induces duplicate component '{comp.id}'")
             s.components.append(deepcopy(comp))
+
+        if self.removed_connections:
+            drop = set(self.removed_connections)
+            s.connections = [
+                c for c in s.connections if (c.source, c.destination) not in drop
+            ]
 
         for conn in self.induced_connections:
             s.connections.append(deepcopy(conn))

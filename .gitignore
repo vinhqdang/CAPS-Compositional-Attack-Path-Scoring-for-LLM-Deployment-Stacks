@@ -217,3 +217,8 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 .DS_Store
+
+# never commit credentials
+.env
+*.env
+GEMINI_API_KEY*
