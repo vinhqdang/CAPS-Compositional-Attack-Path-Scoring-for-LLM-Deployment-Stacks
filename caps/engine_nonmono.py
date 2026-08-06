@@ -22,6 +22,21 @@ This module relaxes that. A ``Control`` is a graph operator with three parts:
 
 Risk is then non-monotone in the control set: parts (2) and (3) can outweigh (1).
 
+Terminology (paper 2):
+
+    Iatrogenic Attack Surface (IAS)
+        The components and edges a control introduces -- parts (2) and (3) above.
+    Apparent Control Effect (ACE)
+        The risk reduction an attenuation-only model reports. Sees part (1) only.
+    Net Control Effect (NCE)
+        The true risk change once the IAS is counted.
+    Iatrogenic Gap
+        ACE - NCE. How much benefit a monotone model over-reports.
+    Iatrogenic Inversion
+        NCE < 0 < ACE. The model recommends a control that increases risk.
+
+"Iatrogenic" is borrowed from medicine: harm caused by the treatment itself.
+
 This module deliberately does not modify ``caps.engine``. Paper 1's published
 numbers must stay reproducible.
 """
@@ -104,13 +119,21 @@ def evaluate_control(stack: DeploymentStack, control: Control) -> Dict[str, floa
 
     score_full = max_path_score(control.apply(stack))
 
+    ace = baseline - score_v1  # Apparent Control Effect
+    nce = baseline - score_full  # Net Control Effect
+
     return {
         "baseline": round(baseline, 3),
         "score_v1": round(score_v1, 3),
         "score_full": round(score_full, 3),
-        "delta_v1": round(baseline - score_v1, 3),
-        "delta_full": round(baseline - score_full, 3),
-        "sign_inverted": (baseline - score_v1) > 0 > (baseline - score_full),
+        # delta_v1 / delta_full are kept as the primary key names; ACE / NCE are the
+        # paper's terminology for the same two quantities.
+        "delta_v1": round(ace, 3),
+        "delta_full": round(nce, 3),
+        "ace": round(ace, 3),
+        "nce": round(nce, 3),
+        "iatrogenic_gap": round(ace - nce, 3),
+        "sign_inverted": ace > 0 > nce,
     }
 
 

@@ -1,4 +1,29 @@
-# Paper 2 — Non-monotone mitigation in compositional attack-path risk
+# Paper 2 — Iatrogenic Attack Surface
+
+**Working title:** *Iatrogenic Risk in LLM Deployment Stacks: Why Attack-Path Models
+Cannot See the Cost of Their Own Defences*
+
+**Target venue:** Computers & Security (Elsevier, COSE) — subscription track, no charge.
+Open access is optional at USD 3,190 and must be **declined** at acceptance. Alternatives:
+Reliability Engineering & System Safety (stronger fit for the defence-in-depth framing,
+higher bar for real data), then International Journal of Information Security (Springer)
+as fallback. Avoid all Gold-OA-only outlets (MDPI, Frontiers, IEEE Access, Heliyon,
+Scientific Reports, PeerJ CS) — mandatory APCs with no free route.
+
+## Terminology
+
+| Term | Meaning |
+|---|---|
+| **Iatrogenic Attack Surface (IAS)** | The components and edges a control introduces into the deployment graph |
+| **Apparent Control Effect (ACE)** | Risk reduction an attenuation-only model reports |
+| **Net Control Effect (NCE)** | True risk change once the IAS is counted |
+| **Iatrogenic Gap** | ACE − NCE — how much benefit a monotone model over-reports |
+| **Iatrogenic Inversion** | NCE < 0 < ACE — the model recommends a control that increases risk |
+| **Inversion Criterion** | Closed-form threshold at which a control becomes net-harmful |
+
+"Iatrogenic" is borrowed from medicine (harm caused by the treatment). Checked against the
+security literature and not in use there; it has precedent in social welfare and criminology
+for "a problem caused by the actions intended to address another problem".
 
 **Status:** Direction chosen. Core result demonstrated in code. Manuscript not started.
 
