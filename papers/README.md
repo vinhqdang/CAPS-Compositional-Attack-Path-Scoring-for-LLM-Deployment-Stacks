@@ -33,7 +33,7 @@ Rules that keep the papers from interfering with each other:
 | ID | Status | Venue | Notes |
 |----|--------|-------|-------|
 | [`paper1-caps-jdsis`](paper1-caps-jdsis/) | **Accepted** | BVP / JDSIS | CAPS v1. Do not change its numbers. |
-| [`paper2-tbd`](paper2-tbd/) | Scoping | Undecided | Direction not yet settled — see its README. |
+| [`paper2-nonmonotone`](paper2-nonmonotone/) | Core result demonstrated | Undecided | Non-monotone mitigation. Code in `caps/engine_nonmono.py`. |
 
 ## Reproducing paper 1's numbers
 
